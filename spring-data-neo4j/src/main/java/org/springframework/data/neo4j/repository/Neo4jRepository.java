@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -33,7 +34,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Jens Schauder
  */
 @NoRepositoryBean
-public interface Neo4jRepository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
+public interface Neo4jRepository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID>, CrudRepository<T, ID> {
 
 	<S extends T> S save(S s, int depth);
 

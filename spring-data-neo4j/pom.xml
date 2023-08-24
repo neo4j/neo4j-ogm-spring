@@ -37,12 +37,17 @@
 		<java-module-name>spring.data.neo4j</java-module-name>
 
 		<caffeine.version>3.1.2</caffeine.version>
-		<el-api.version>2.2</el-api.version>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
-		<neo4j.version>5.3.0</neo4j.version>
+		<neo4j.version>5.11.0</neo4j.version>
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
 		<spotbugs-maven-plugin.version>3.1.3</spotbugs-maven-plugin.version>
 		<spotbugs.version>3.1.3</spotbugs.version>
+
+		<cdi>3.0.1</cdi>
+		<jakarta.interceptor-api.version>2.0.1</jakarta.interceptor-api.version>
+		<jakarta.transaction-api.version>2.0.0</jakarta.transaction-api.version>
+		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+		<jakarta.el-api.version>5.0.1</jakarta.el-api.version>
 	</properties>
 
 
@@ -80,70 +85,63 @@
 		</dependency>
 
 		<!-- CDI -->
-		<!-- Dependency order required to build against CDI 1.0 and test with CDI 2.0 -->
 		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jcdi_2.0_spec</artifactId>
-			<version>1.0.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.interceptor</groupId>
-			<artifactId>javax.interceptor-api</artifactId>
-			<version>1.2.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
+			<groupId>jakarta.enterprise</groupId>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
 			<version>${cdi}</version>
 			<scope>provided</scope>
-			<optional>true</optional>
 		</dependency>
-
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<version>${javax-annotation-api}</version>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<version>${jakarta.transaction-api.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
+			<version>${jakarta.el-api.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- OpenWebbeans pendant does not work… -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.el</artifactId>
+			<version>4.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openwebbeans</groupId>
+			<artifactId>openwebbeans-impl</artifactId>
+			<version>${webbeans}</version>
+			<classifier>jakarta</classifier>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.openwebbeans</groupId>
 			<artifactId>openwebbeans-se</artifactId>
 			<version>${webbeans}</version>
+			<classifier>jakarta</classifier>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<groupId>org.apache.openwebbeans</groupId>
+			<artifactId>openwebbeans-spi</artifactId>
+			<version>${webbeans}</version>
+			<classifier>jakarta</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>${jakarta.servlet-api.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-
-		<!-- JSR 303 Validation -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>${validation}</version>
-			<optional>true</optional>
-		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.2.Final</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.el</artifactId>
-			<version>3.0.0</version>
+			<version>8.0.1.Final</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -183,6 +181,14 @@
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-nop</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>javax.servlet-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.neo4j</groupId>
+					<artifactId>neo4j-slf4j-provider</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

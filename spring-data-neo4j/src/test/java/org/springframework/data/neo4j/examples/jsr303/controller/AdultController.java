@@ -15,8 +15,8 @@
  */
 package org.springframework.data.neo4j.examples.jsr303.controller;
 
-import javax.validation.Valid;
-import javax.validation.ValidationException;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.examples.jsr303.domain.Adult;

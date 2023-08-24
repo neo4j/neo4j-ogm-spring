@@ -17,8 +17,8 @@ package org.springframework.data.neo4j.repository.cdi;
 
 import java.util.Optional;
 
-import javax.enterprise.inject.se.SeContainer;
-import javax.enterprise.inject.se.SeContainerInitializer;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -44,12 +44,9 @@ public class CdiExtensionTests {
 	public static void setUp() {
 
 		neo4jTestServer = Neo4jBuilders.newInProcessBuilder().withDisabledServer().build();
-
-		// Prevent the Jersey extension to interact with the InitialContext
-		System.setProperty("com.sun.jersey.server.impl.cdi.lookupExtensionInBeanManager", "true");
-
 		container = SeContainerInitializer.newInstance() //
 				.disableDiscovery() //
+				.addExtensions(Neo4jCdiRepositoryExtension.class)
 				.addPackages(RepositoryClient.class) //
 				.initialize();
 	}

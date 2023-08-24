@@ -28,7 +28,7 @@
 	<parent>
 		<groupId>org.springframework.data.build</groupId>
 		<artifactId>spring-data-parent</artifactId>
-		<version>2.7.7</version>
+		<version>3.1.3</version>
 	</parent>
 
 	<modules>
@@ -44,8 +44,8 @@
 
 		<project.type>multi</project.type>
 
-		<neo4j.ogm.version>4.0.1</neo4j.ogm.version>
-		<springdata.commons>2.7.7</springdata.commons>
+		<neo4j.ogm.version>4.0.6</neo4j.ogm.version>
+		<springdata.commons>3.1.3</springdata.commons>
 	</properties>
 
 	<developers>

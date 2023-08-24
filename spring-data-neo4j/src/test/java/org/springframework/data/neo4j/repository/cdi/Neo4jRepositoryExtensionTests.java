@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.ProcessBean;
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.ProcessBean;
 
 import org.junit.Before;
 import org.junit.Test;
