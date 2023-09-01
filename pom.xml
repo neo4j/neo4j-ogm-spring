@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2011-2023 the original author or authors.
@@ -19,38 +19,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.springframework.data</groupId>
-	<artifactId>spring-data-neo4j-parent</artifactId>
-	<version>5.4.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
-	<name>Spring Data Neo4j</name>
-	<description>Neo4j support for Spring Data</description>
-	<url>https://projects.spring.io/spring-data-neo4j</url>
-
 	<parent>
 		<groupId>org.springframework.data.build</groupId>
 		<artifactId>spring-data-parent</artifactId>
 		<version>3.1.3</version>
 	</parent>
 
-	<modules>
-		<module>spring-data-neo4j</module>
-		<module>spring-data-neo4j-distribution</module>
-	</modules>
+	<groupId>org.neo4j</groupId>
+	<artifactId>neo4j-ogm-spring-parent</artifactId>
+	<version>5.4.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-	<properties>
-		<java.version>17</java.version>
-		<source.level>${java.version}</source.level>
-
-		<dist.id>spring-data-neo4j</dist.id>
-
-		<project.type>multi</project.type>
-
-		<license-maven-plugin.version>4.2.rc2</license-maven-plugin.version>
-		<neo4j.ogm.version>4.0.6</neo4j.ogm.version>
-		<springdata.commons>3.1.3</springdata.commons>
-	</properties>
+	<name>Neo4j-OGM (Spring Parent)</name>
+	<description>Neo4j support for Spring Data</description>
+	<url>https://projects.spring.io/spring-data-neo4j</url>
 
 	<developers>
 		<developer>
@@ -187,163 +169,277 @@
 		</developer>
 	</developers>
 
+	<modules>
+		<module>spring-data-neo4j</module>
+		<module>integration-tests</module>
+	</modules>
+
+	<properties>
+		<dist.id>spring-data-neo4j</dist.id>
+		<java.version>17</java.version>
+		<license-maven-plugin.version>4.2.rc2</license-maven-plugin.version>
+		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
+		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+		<maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+		<maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>
+		<maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>
+		<maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
+		<maven-install-plugin.version>3.1.1</maven-install-plugin.version>
+		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
+		<maven.version>3.9.4</maven.version>
+		<neo4j.ogm.version>4.0.6</neo4j.ogm.version>
+		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+		<sortpom-maven-plugin.version>3.3.0</sortpom-maven-plugin.version>
+		<source.level>${java.version}</source.level>
+		<springdata.commons>3.1.3</springdata.commons>
+	</properties>
+
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.mycila</groupId>
+					<artifactId>license-maven-plugin</artifactId>
+					<version>${license-maven-plugin.version}</version>
+					<configuration>
+						<licenseSets>
+							<licenseSet>
+								<header>etc/license.tpl</header>
+								<includes>
+									<include>**</include>
+								</includes>
+								<excludes>
+									<exclude>.m2/**</exclude>
+									<exclude>m2/**</exclude>
+									<exclude>**/*.adoc</exclude>
+									<exclude>**/*.conf</exclude>
+									<exclude>**/*.cql</exclude>
+									<exclude>**/*.css</exclude>
+									<exclude>**/*.csv</exclude>
+									<exclude>**/*.cypher</exclude>
+									<exclude>**/*.js</exclude>
+									<exclude>**/*.sh</exclude>
+									<exclude>**/*.tpl</exclude>
+									<exclude>**/*.txt</exclude>
+									<exclude>**/*.yaml</exclude>
+									<exclude>**/*.mf</exclude>
+									<exclude>**/spring.handlers</exclude>
+									<exclude>**/spring.schemas</exclude>
+									<exclude>**/spring.tooling</exclude>
+									<exclude>**/package-info.java</exclude>
+									<exclude>bin/**</exclude>
+								</excludes>
+							</licenseSet>
+						</licenseSets>
+						<strictCheck>true</strictCheck>
+						<mapping>
+							<factories>SCRIPT_STYLE</factories>
+						</mapping>
+						<properties>
+							<year>2023</year>
+						</properties>
+
+						<dependencyEnforce>true</dependencyEnforce>
+						<dependencyExceptionMessage>One or more dependencies are licensed under a non-approved license.</dependencyExceptionMessage>
+						<dependencyPolicies>
+							<!-- Apache 2 -->
+							<dependencyPolicy>
+								<type>LICENSE_URL</type>
+								<rule>APPROVE</rule>
+								<value>https://www.apache.org/licenses/LICENSE-2.0</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>Apache License, Version 2</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>Apache License, Version 2.0</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>The Apache Software License, Version 2.0</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>The Apache License, Version 2.0</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>Apache 2.0</value>
+							</dependencyPolicy>
+							<!-- MIT -->
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>MIT License</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>The MIT License (MIT)</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>ARTIFACT_PATTERN</type>
+								<rule>APPROVE</rule>
+								<value>ch.qos.logback:logback-classic:jar</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>ARTIFACT_PATTERN</type>
+								<rule>APPROVE</rule>
+								<value>org.testcontainers:neo4j:jar</value>
+							</dependencyPolicy>
+							<!-- Eclipse Public License -->
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>EPL 2.0</value>
+							</dependencyPolicy>
+						</dependencyPolicies>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.github.ekryd.sortpom</groupId>
+					<artifactId>sortpom-maven-plugin</artifactId>
+					<version>${sortpom-maven-plugin.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<keepBlankLines>true</keepBlankLines>
+						<nrOfIndentSpace>-1</nrOfIndentSpace>
+						<sortProperties>true</sortProperties>
+						<sortDependencies>scope,groupId,artifactId</sortDependencies>
+						<createBackupFile>false</createBackupFile>
+						<expandEmptyElements>false</expandEmptyElements>
+						<verifyFail>stop</verifyFail>
+						<verifyFailOn>strict</verifyFailOn>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven-enforcer-plugin.version}</version>
+					<configuration>
+						<rules>
+							<requireJavaVersion>
+								<version>${java.version}</version>
+							</requireJavaVersion>
+							<requireMavenVersion>
+								<version>${maven.version}</version>
+							</requireMavenVersion>
+						</rules>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<configuration combine.self="override">
+						<configLocation>etc/checkstyle/config.xml</configLocation>
+						<suppressionsLocation>etc/checkstyle/suppressions.xml</suppressionsLocation>
+						<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+						<outputEncoding>${project.build.sourceEncoding}</outputEncoding>
+						<consoleOutput>true</consoleOutput>
+						<failsOnError>true</failsOnError>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration combine.self="override">
+						<release>${java.version}</release>
+						<compilerArgs>
+							<arg>-parameters</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven-failsafe-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${maven-install-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven-deploy-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration combine.self="override">
-					<release>${java.version}</release>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration combine.self="override">
-					<configLocation>etc/checkstyle/config.xml</configLocation>
-					<suppressionsLocation>etc/checkstyle/suppressions.xml</suppressionsLocation>
-					<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
-					<outputEncoding>${project.build.sourceEncoding}</outputEncoding>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
-					<includeTestSourceDirectory>true</includeTestSourceDirectory>
-				</configuration>
+				<artifactId>maven-enforcer-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>validate</id>
-						<phase>validate</phase>
+						<id>enforce</id>
 						<goals>
-							<goal>check</goal>
+							<goal>enforce</goal>
 						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.ekryd.sortpom</groupId>
+				<artifactId>sortpom-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+						<phase>validate</phase>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>${license-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>validate</id>
-						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
+						<phase>validate</phase>
 					</execution>
 				</executions>
-				<configuration>
-					<licenseSets>
-						<licenseSet>
-					<header>etc/license.tpl</header>
-						<includes>
-							<include>**</include>
-						</includes>
-						<excludes>
-							<exclude>.m2/**</exclude>
-							<exclude>m2/**</exclude>
-							<exclude>**/*.adoc</exclude>
-							<exclude>**/*.conf</exclude>
-							<exclude>**/*.cql</exclude>
-							<exclude>**/*.css</exclude>
-							<exclude>**/*.csv</exclude>
-							<exclude>**/*.cypher</exclude>
-							<exclude>**/*.js</exclude>
-							<exclude>**/*.sh</exclude>
-							<exclude>**/*.tpl</exclude>
-							<exclude>**/*.txt</exclude>
-							<exclude>**/*.yaml</exclude>
-							<exclude>**/*.mf</exclude>
-							<exclude>**/spring.handlers</exclude>
-							<exclude>**/spring.schemas</exclude>
-							<exclude>**/spring.tooling</exclude>
-							<exclude>**/package-info.java</exclude>
-							<exclude>bin/**</exclude>
-						</excludes>
-						</licenseSet>
-					</licenseSets>
-					<strictCheck>true</strictCheck>
-					<mapping>
-						<factories>SCRIPT_STYLE</factories>
-					</mapping>
-					<properties>
-						<year>2023</year>
-					</properties>
-
-					<dependencyEnforce>true</dependencyEnforce>
-					<dependencyExceptionMessage>One or more dependencies are licensed under a non-approved license.</dependencyExceptionMessage>
-					<dependencyPolicies>
-						<!-- Apache 2 -->
-						<dependencyPolicy>
-							<type>LICENSE_URL</type>
-							<rule>APPROVE</rule>
-							<value>https://www.apache.org/licenses/LICENSE-2.0</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>Apache License, Version 2</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>Apache License, Version 2.0</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>The Apache Software License, Version 2.0</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>The Apache License, Version 2.0</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>Apache 2.0</value>
-						</dependencyPolicy>
-						<!-- MIT -->
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>MIT License</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>The MIT License (MIT)</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>ARTIFACT_PATTERN</type>
-							<rule>APPROVE</rule>
-							<value>ch.qos.logback:logback-classic:jar</value>
-						</dependencyPolicy>
-						<dependencyPolicy>
-							<type>ARTIFACT_PATTERN</type>
-							<rule>APPROVE</rule>
-							<value>org.testcontainers:neo4j:jar</value>
-						</dependencyPolicy>
-						<!-- Eclipse Public License -->
-						<dependencyPolicy>
-							<type>LICENSE_NAME</type>
-							<rule>APPROVE</rule>
-							<value>EPL 2.0</value>
-						</dependencyPolicy>
-					</dependencyPolicies>
-				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<configuration combine.self="append">
-					<doctype>book</doctype>
-					<attributes>
-						<neo4jOgmVersion>${neo4j.ogm.version}</neo4jOgmVersion>
-					</attributes>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>checkstyle-validation</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+						<inherited>true</inherited>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
