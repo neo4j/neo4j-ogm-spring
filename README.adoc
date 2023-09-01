@@ -1,17 +1,36 @@
-= Spring Data Neo4j
+= Neo4j-OGM Spring Data
+Michael Simons <michael.simons@neo4j.com>
+:doctype: article
+:lang: en
+:listing-caption: Listing
+:source-highlighter: coderay
+:icons: font
+:latest_version: 5.4.0-SNAPSHOT
+:groupId: org.neo4j
+:artifactId: neo4j-ogm-spring
+:branch: main
 
-WARNING: This is an #*unofficial*# fork of https://github.com/spring-projects/spring-data-neo4j[Spring Data Neo4j 5.3.x].
-         It has not been released anywhere so far and there exists no concrete plans of doing so.
+[abstract]
+--
+This is an official fork of https://github.com/spring-projects/spring-data-neo4j/tree/5.3.x[Spring Data Neo4j 5.3.x].
+It keeps the legacy SDN5 version that wasn't an OGM on its own right alive and uses https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] under the hood.
+Support is provided on a best effort basis.
+--
+
+== Introduction
 
 The fork has no additional functionality but is updated in two dimensions:
 
-* It uses the latest Spring Data Commons (2.7.7 as of writing) and fixes breaking changes with it
-* It uses the latest Neo4j-OGM 4.0.1 and thus is compatible with Neo4j 5.x
-* However, Java 17 is required due to the requirements of the latest Neo4j-Java-Driver underpinning Neo4j-OGM 4 (ask the maintainers (oh wait))
+* It uses the latest Spring Data Commons (3.1.3 as of writing) and fixes breaking changes that came with it since SDN 5.3.x
+* It uses the latest Neo4j-OGM 4.0.6 and thus is compatible with Neo4j 5.x
+* However, Java 17 is required due to the requirements of the latest Neo4j-Java-Driver underpinning Neo4j-OGM 4
 
 If you just want to use Neo4j-OGM and SDN5 against Neo4j 4.x over Bolt you can still use the official 5.3.x release.
-For now this repo and especially 5.4.x branch is just a proof of concept demonstrating the possibility of a release under new coordinates.
+
+Spring Boot itself does not know about this version of SDN and thus won't autoconfigure it.
+Look into the submodule `integration-tests` for an exemplary configuration-class.
 
 == License
 
 Spring Data Neo4j is Open Source software released under the https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
+We thank the Spring Data Team for not objecting to this friendly fork.
