@@ -177,6 +177,7 @@
 
 	<properties>
 		<dist.id>spring-data-neo4j</dist.id>
+		<exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
 		<java.version>17</java.version>
 		<license-maven-plugin.version>4.2.rc2</license-maven-plugin.version>
 		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
@@ -187,6 +188,8 @@
 		<maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
 		<maven-install-plugin.version>3.1.1</maven-install-plugin.version>
 		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+		<maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+		<maven-release-plugin.version>3.0.1</maven-release-plugin.version>
 		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.9.4</maven.version>
@@ -464,6 +467,78 @@
 						<inherited>true</inherited>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addBuildEnvironmentEntries>true</addBuildEnvironmentEntries>
+						</manifest>
+						<manifestEntries>
+							<Automatic-Module-Name>${java-module-name}</Automatic-Module-Name>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration combine.self="append">
+					<quiet>true</quiet>
+					<detectOfflineLinks>false</detectOfflineLinks>
+					<detectJavaApiLink>true</detectJavaApiLink>
+					<tags>
+						<tag>
+							<name>soundtrack</name>
+							<placement>a</placement>
+							<head>Soundtrack</head>
+						</tag>
+					</tags>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<inherited>false</inherited>
+				<executions>
+					<execution>
+						<id>prepare-release</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration combine.self="append">
+							<skip>false</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+					<goals>deploy</goals>
+					<arguments>-Dsort.skip -Drelease -Dgpg.skip=${skipSigning} -DskipTests=${skipTestsDuringRelease} -DisDryRun=${dryRun}</arguments>
+					<preparationGoals>clean exec:exec@prepare-release verify</preparationGoals>
+					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
