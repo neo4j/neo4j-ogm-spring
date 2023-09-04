@@ -387,6 +387,30 @@
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven-deploy-plugin.version}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>${exec-maven-plugin.version}</version>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+					<executions>
+						<execution>
+							<id>prepare-release</id>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<configuration>
+								<executable>bin/prepare-release.sh</executable>
+								<arguments>
+									<argument>${project.version}</argument>
+									<argument>${isDryRun}</argument>
+								</arguments>
+								<skip>true</skip>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -444,4 +468,145 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<?SORTPOM IGNORE?>
+		<profile>
+			<id>jreleaser</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jreleaser</groupId>
+						<artifactId>jreleaser-maven-plugin</artifactId>
+						<version>1.8.0</version>
+						<inherited>false</inherited>
+						<configuration>
+							<jreleaser>
+								<project>
+									<name>neo4j-ogm-spring</name>
+								</project>
+								<release>
+									<github>
+										<skipTag>true</skipTag>
+										<tagName>{{projectVersion}}</tagName>
+										<releaseName>{{projectVersion}}</releaseName>
+										<branch>main</branch>
+										<changelog>
+											<formatted>ALWAYS</formatted>
+											<contentTemplate>etc/jreleaser/changelog.md.tpl</contentTemplate>
+											<format>- {{commitShortHash}} {{commitTitle}}</format>
+											<preset>conventional-commits</preset>
+											<contributors>
+												<format>- {{^contributorUsername}}{{contributorName}}{{/contributorUsername}}{{#contributorUsername}}@{{contributorUsername}}{{/contributorUsername}}</format>
+											</contributors>
+											<labelers>
+												<labeler>
+													<title>Bump</title>
+													<label>dependabot</label>
+													<order>-1</order>
+												</labeler>
+												<labeler>
+													<title>build(deps)</title>
+													<label>dependabot</label>
+													<order>-2</order>
+												</labeler>
+												<labeler>
+													<title>Fix</title>
+													<label>fix</label>
+												</labeler>
+												<labeler>
+													<title>fix</title>
+													<label>fix</label>
+												</labeler>
+												<labeler>
+													<title>Add support</title>
+													<label>feat</label>
+												</labeler>
+												<labeler>
+													<title>Document</title>
+													<label>docs</label>
+												</labeler>
+												<labeler>
+													<title>After release cleanup.</title>
+													<label>maven-release</label>
+												</labeler>
+												<labeler>
+													<title>[maven-release-plugin]</title>
+													<label>maven-release</label>
+												</labeler>
+												<labeler>
+													<body>nocl</body>
+													<label>nocl</label>
+												</labeler>
+											</labelers>
+											<replacers>
+												<replacer>
+													<search>(?:build\(deps\): )(.*)</search>
+													<replace>$1</replace>
+												</replacer>
+												<replacer>
+													<search>((?:GH-)(\d+) - )(.*)</search>
+													<replace>$3 (#$2)</replace>
+												</replacer>
+											</replacers>
+											<categories>
+												<category>
+													<key>features</key>
+													<title>&#x1f680; Features</title>
+													<labels>feat</labels>
+													<order>10</order>
+												</category>
+												<category>
+													<key>fixes</key>
+													<title>&#x1f41b; Bug Fixes</title>
+													<labels>fix</labels>
+													<order>20</order>
+												</category>
+												<category>
+													<key>changes</key>
+													<title>&#x1f504;️ Refactorings</title>
+													<labels>refactor</labels>
+													<order>25</order>
+												</category>
+												<category>
+													<key>docs</key>
+													<title>&#x1f4dd; Documentation</title>
+													<labels>docs</labels>
+													<order>30</order>
+												</category>
+												<category>
+													<key>tasks</key>
+													<title>&#x1f9f0; Tasks</title>
+													<labels>chore</labels>
+													<order>35</order>
+												</category>
+												<category>
+													<title>&#x1f9f9; Housekeeping</title>
+													<labels>dependabot</labels>
+													<order>70</order>
+												</category>
+												<category>
+													<key>build</key>
+													<title>&#x1f6e0; Build</title>
+													<order>80</order>
+												</category>
+												<category>
+													<title>nocl</title>
+													<labels>nocl,maven-release</labels>
+												</category>
+											</categories>
+											<hide>
+												<categories>dependabot,nocl</categories>
+												<contributors>GitHub,dependabot</contributors>
+											</hide>
+										</changelog>
+									</github>
+								</release>
+							</jreleaser>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<?SORTPOM RESUME?>
+	</profiles>
 </project>
