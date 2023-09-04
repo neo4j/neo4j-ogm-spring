@@ -25,7 +25,6 @@ import java.lang.annotation.Target;
  * Indicates that a transactional operation will use bookmarks that are currently stored in BookmarkManager when
  * creating Neo4j session. Must be used on a method with @Transactional annotation. May be used on class - applies to
  * all methods or on specific methods.
- * <p>
  *
  * @author Frantisek Hartman
  * @see EnableBookmarkManagement
