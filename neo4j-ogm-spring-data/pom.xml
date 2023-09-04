@@ -27,10 +27,10 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>neo4j-ogm-spring</artifactId>
+	<artifactId>neo4j-ogm-spring-data</artifactId>
 
-	<name>Neo4j-OGM (Spring)</name>
-	<description>Neo4J support for Spring Data</description>
+	<name>Neo4j-OGM (Spring Data)</name>
+	<description>Neo4j support for Spring Data</description>
 
 	<properties>
 
@@ -42,7 +42,7 @@
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<jakarta.transaction-api.version>2.0.0</jakarta.transaction-api.version>
 
-		<java-module-name>spring.data.neo4j</java-module-name>
+		<java-module-name>org.neo4j.ogm.springframework.data</java-module-name>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
 		<neo4j.version>5.11.0</neo4j.version>
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
