@@ -27,8 +27,40 @@ The fork has no additional functionality but is updated in two dimensions:
 
 If you just want to use Neo4j-OGM and SDN5 against Neo4j 4.x over Bolt you can still use the official 5.3.x release.
 
+The coordinates of this SDN versions are:
+
+[source,groovy,subs="verbatim,attributes"]
+----
+{groupId}:{artifactId}:{latest_version}
+----
+
+The package name has not been changed to avoid issues with existing setups that want to use this fork.
+
 Spring Boot itself does not know about this version of SDN and thus won't autoconfigure it.
-Look into the submodule `integration-tests` for an exemplary configuration-class.
+We offer a very plain Spring Boot starter mitigating this under the following coordinates:
+
+=== Include in a Maven build
+
+[source,xml,subs="verbatim,attributes"]
+----
+<dependency>
+    <groupId>{groupId}</groupId>
+    <artifactId>{artifactId}-boot-starter</artifactId>
+    <version>{latest_version}</version>
+</dependency>
+----
+
+=== Include in a Gradle build
+
+[source,groovy,subs="verbatim,attributes"]
+----
+dependencies {
+    implementation '{groupId}:{artifactId}-starter:{latest_version}'
+}
+----
+
+It brings all necessary dependencies.
+
 
 == License
 

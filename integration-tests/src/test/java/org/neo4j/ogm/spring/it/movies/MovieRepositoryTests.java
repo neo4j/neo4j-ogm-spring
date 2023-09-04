@@ -20,7 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.neo4j.driver.Driver;
+import org.neo4j.ogm.springframework.boot.autoconfigure.Neo4jOGMAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,7 +36,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * @author Michael J. Simons
  */
 @Testcontainers
-@DataNeo4jTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = Neo4jOGMConfig.class))
+@DataNeo4jTest
+@ImportAutoConfiguration(Neo4jOGMAutoConfiguration.class)
 public class MovieRepositoryTests {
 
 	@Container
