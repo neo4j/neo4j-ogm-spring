@@ -233,6 +233,7 @@
 									<exclude>**/spring.schemas</exclude>
 									<exclude>**/spring.tooling</exclude>
 									<exclude>**/package-info.java</exclude>
+									<exclude>**/org.springframework.boot.autoconfigure.AutoConfiguration.imports</exclude>
 									<exclude>bin/**</exclude>
 								</excludes>
 							</licenseSet>
