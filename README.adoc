@@ -33,7 +33,7 @@ The coordinates of this SDN versions are:
 
 [source,groovy,subs="verbatim,attributes"]
 ----
-{groupId}:{artifactId}:{latest_version}
+{groupId}:{artifactId}-data:{latest_version}
 ----
 
 The package name has not been changed to avoid issues with existing setups that want to use this fork.
