@@ -23,8 +23,6 @@ import java.util.Optional;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.AutowireCandidateQualifier;
@@ -42,7 +40,6 @@ import org.springframework.data.repository.config.AnnotationRepositoryConfigurat
 import org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport;
 import org.springframework.data.repository.config.RepositoryConfigurationSource;
 import org.springframework.data.repository.config.XmlRepositoryConfigurationSource;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -67,8 +64,8 @@ public class Neo4jRepositoryConfigurationExtension extends RepositoryConfigurati
 
 	private static final String ENABLE_DEFAULT_TRANSACTIONS_ATTRIBUTE = "enableDefaultTransactions";
 	private static final String NEO4J_PERSISTENCE_EXCEPTION_TRANSLATOR_NAME = "neo4jPersistenceExceptionTranslator";
-	private static final String MODULE_PREFIX = "neo4j";
 	private static final String MODULE_NAME = "Neo4j";
+	static final String MODULE_PREFIX_ERROR_MSG = "This method has been deprecated and should not have been called";
 
 	/**
 	 * We use a generated name for every pair of {@code SessionFactory} and {@code Session} unless the user configures a
@@ -100,13 +97,10 @@ public class Neo4jRepositoryConfigurationExtension extends RepositoryConfigurati
 		return Neo4jRepositoryFactoryBean.class.getName();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.data.repository.config14.RepositoryConfigurationExtensionSupport#getModulePrefix()
-	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	protected String getModulePrefix() {
-		return MODULE_PREFIX;
+		throw new UnsupportedOperationException(MODULE_PREFIX_ERROR_MSG);
 	}
 
 	/*
@@ -114,7 +108,6 @@ public class Neo4jRepositoryConfigurationExtension extends RepositoryConfigurati
 	 * @see org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport#getIdentifyingAnnotations()
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	protected Collection<Class<? extends Annotation>> getIdentifyingAnnotations() {
 		return Arrays.asList(NodeEntity.class, RelationshipEntity.class);
 	}
@@ -125,7 +118,7 @@ public class Neo4jRepositoryConfigurationExtension extends RepositoryConfigurati
 	 */
 	@Override
 	protected Collection<Class<?>> getIdentifyingTypes() {
-		return Collections.<Class<?>> singleton(Neo4jRepository.class);
+		return Collections.singleton(Neo4jRepository.class);
 	}
 
 	/*
