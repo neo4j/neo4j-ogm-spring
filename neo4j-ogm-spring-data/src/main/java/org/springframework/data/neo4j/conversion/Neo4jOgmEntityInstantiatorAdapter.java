@@ -97,6 +97,7 @@ public class Neo4jOgmEntityInstantiatorAdapter implements org.neo4j.ogm.session.
 			}
 		}
 
+		@SuppressWarnings("unchecked")
 		private <T> T extractParameterValue(Parameter<T, Neo4jPersistentProperty> parameter) {
 
 			Object value = propertyValues.get(parameter.getName());

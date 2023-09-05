@@ -155,7 +155,7 @@ public interface GraphQueryExecution {
 				} else {
 					result = (List<?>) session.query(type, query.getCypherQuery(pageable, false), query.getParameters());
 				}
-				count = (result.size() > 0) ? countTotalNumberOfElements(query) : 0;
+				count = result.isEmpty() ? 0 : countTotalNumberOfElements(query);
 			}
 
 			return PageableExecutionUtils.getPage(result, pageable, () -> count);
@@ -179,6 +179,7 @@ public interface GraphQueryExecution {
 			this.pageable = accessor.getPageable();
 		}
 
+		@SuppressWarnings( {"rawtypes", "unchecked"})
 		@Override
 		public Object execute(Query query, Class<?> type) {
 

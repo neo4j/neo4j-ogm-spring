@@ -361,6 +361,8 @@
 						<release>${java.version}</release>
 						<compilerArgs>
 							<arg>-parameters</arg>
+							<arg>-Xlint:unchecked</arg>
+							<arg>-Xlint:deprecation</arg>
 						</compilerArgs>
 					</configuration>
 				</plugin>

@@ -17,7 +17,6 @@ package org.springframework.data.neo4j.repository.query;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.data.geo.Distance;
@@ -25,6 +24,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.Parameters;
+import org.springframework.data.util.TypeInformation;
 
 /**
  * Custom extension of {@link Parameters} discovering additional to handle @link{Depth} special parameter.
@@ -34,36 +34,26 @@ import org.springframework.data.repository.query.Parameters;
  */
 public class GraphParameters extends Parameters<GraphParameters, GraphParameters.GraphParameter> {
 
-	private Integer depthIndex;
+	private final int depthIndex;
 
 	GraphParameters(Method method) {
-		super(method);
-	}
+		super(method, GraphParameter::new);
+new Exception().printStackTrace();
+		var depthParameter = super.stream().filter(GraphParameter::isDepthParameter).toList();
 
-	GraphParameters(List<GraphParameter> parameters, Integer depthIndex) {
-		super(parameters);
-		this.depthIndex = depthIndex;
-	}
-
-	@Override
-	protected GraphParameter createParameter(MethodParameter parameter) {
-		GraphParameter graphParameter = new GraphParameter(parameter);
-
-		// Detect manually annotated @Depth and reject multiple annotated ones
-		if (this.depthIndex == null && graphParameter.isDepthParameter()) {
-			this.depthIndex = graphParameter.getIndex();
-		} else if (graphParameter.isDepthParameter()) {
-
-			String methodFragment = Optional.ofNullable(parameter)
-					.map(MethodParameter::getMethod)
-					.map(Method::toString)
-					.map(s -> "method " + s)
-					.orElse("unknown method");
+		if (depthParameter.size() > 1) {
 			throw new IllegalStateException(String.format("Found multiple @Depth annotations on method %s! Only one allowed!",
-					methodFragment));
+				method));
+		} else if (depthParameter.isEmpty()) {
+			depthIndex = -1;
+		} else {
+			depthIndex = depthParameter.get(0).getIndex();
 		}
+	}
 
-		return graphParameter;
+	private GraphParameters(List<GraphParameter> originals, int depthIndex) {
+		super(originals);
+		this.depthIndex = depthIndex;
 	}
 
 	@Override
@@ -72,7 +62,7 @@ public class GraphParameters extends Parameters<GraphParameters, GraphParameters
 	}
 
 	int getDepthIndex() {
-		return (depthIndex != null) ? depthIndex : -1;
+		return this.depthIndex;
 	}
 
 	static class GraphParameter extends Parameter {
@@ -85,7 +75,7 @@ public class GraphParameters extends Parameters<GraphParameters, GraphParameters
 		 * @param parameter must not be {@literal null}.
 		 */
 		GraphParameter(MethodParameter parameter) {
-			super(parameter);
+			super(parameter, TypeInformation.of(Parameter.class));
 			this.parameter = parameter;
 		}
 
@@ -96,8 +86,8 @@ public class GraphParameters extends Parameters<GraphParameters, GraphParameters
 		@Override
 		public boolean isSpecialParameter() {
 			return super.isSpecialParameter() || Distance.class.isAssignableFrom(getType())
-					|| parameter.getParameterAnnotation(Depth.class) != null || Distance.class.isAssignableFrom(getType())
-					|| Point.class.isAssignableFrom(getType());
+			       || parameter.getParameterAnnotation(Depth.class) != null || Distance.class.isAssignableFrom(getType())
+			       || Point.class.isAssignableFrom(getType());
 		}
 
 		boolean isDepthParameter() {

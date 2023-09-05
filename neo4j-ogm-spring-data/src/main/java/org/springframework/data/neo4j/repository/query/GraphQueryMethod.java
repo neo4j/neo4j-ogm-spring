@@ -67,7 +67,7 @@ public class GraphQueryMethod extends QueryMethod {
 	}
 
 	@Override
-	protected Parameters<?, ?> createParameters(Method method) {
+	protected Parameters<?, ?> createParameters(Method method, TypeInformation<?> domainType) {
 		return new GraphParameters(method);
 	}
 

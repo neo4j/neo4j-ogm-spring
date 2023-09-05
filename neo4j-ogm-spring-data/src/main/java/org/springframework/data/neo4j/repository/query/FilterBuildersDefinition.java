@@ -56,7 +56,7 @@ class FilterBuildersDefinition {
 		this.isInternalIdProperty = part -> {
 			PersistentPropertyPath<Neo4jPersistentProperty> path = mappingContext
 					.getPersistentPropertyPath(part.getProperty());
-			Neo4jPersistentProperty possibleIdProperty = path.getRequiredLeafProperty();
+			Neo4jPersistentProperty possibleIdProperty = path.getLeafProperty();
 			return possibleIdProperty.isInternalIdProperty();
 		};
 		this.filterBuilders.add(FilterBuilder.forPartAndEntity(basePart, entityType, BooleanOperator.NONE,

@@ -114,7 +114,7 @@ public class Neo4jMappingContext extends AbstractMappingContext<Neo4jPersistentE
 					if (fieldInfo.isArray()) {
 						propertyConverter = nativePointArrayConverter;
 					} else if (fieldInfo.isIterable()) {
-						propertyConverter = new ConverterBasedCollectionConverter(fieldInfo.getField().getType(),
+						propertyConverter = new ConverterBasedCollectionConverter<>(fieldInfo.getField().getType(),
 								nativePointConverter);
 					} else {
 						propertyConverter = nativePointConverter;

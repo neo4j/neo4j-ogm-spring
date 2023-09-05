@@ -15,8 +15,6 @@
  */
 package org.springframework.data.neo4j.repository.support;
 
-import java.io.Serializable;
-
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
@@ -26,7 +24,7 @@ import org.springframework.data.repository.core.support.AbstractEntityInformatio
  * @author Mark Angrish
  * @author Mark Paluch
  */
-public class GraphEntityInformation<T, ID extends Serializable> extends AbstractEntityInformation<T, ID> {
+public class GraphEntityInformation<T, ID> extends AbstractEntityInformation<T, ID> {
 
 	private final MetaData metaData;
 
