@@ -31,7 +31,7 @@ If you just want to use Neo4j-OGM and SDN5 against Neo4j 4.x over Bolt you can s
 
 The coordinates of this SDN versions are:
 
-[source,groovy,subs="verbatim,attributes"]
+[source,subs="verbatim,attributes"]
 ----
 {groupId}:{artifactId}-data:{latest_version}
 ----
