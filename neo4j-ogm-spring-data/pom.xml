@@ -269,25 +269,14 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>fast</id>
+			<id>skipCoreTests</id>
 			<activation>
 				<property>
-					<name>fast</name>
+					<name>skipCoreTests</name>
 				</property>
 			</activation>
 			<properties>
-				<asciidoctor.skip>true</asciidoctor.skip>
-				<checkstyle.skip>true</checkstyle.skip>
-				<docker.skip>true</docker.skip>
-				<invoker.skip>true</invoker.skip>
-				<jacoco.skip>true</jacoco.skip>
-				<japicmp.skip>true</japicmp.skip>
-				<jqassistant.skip>true</jqassistant.skip>
-				<license.skip>true</license.skip>
-				<maven.javadoc.skip>true</maven.javadoc.skip>
-				<pmd.skip>true</pmd.skip>
 				<skipITs>true</skipITs>
-				<skipNativeBuild>true</skipNativeBuild>
 				<skipTests>true</skipTests>
 			</properties>
 		</profile>
