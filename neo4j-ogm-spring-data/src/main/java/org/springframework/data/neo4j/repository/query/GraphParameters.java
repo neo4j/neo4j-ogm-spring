@@ -38,7 +38,6 @@ public class GraphParameters extends Parameters<GraphParameters, GraphParameters
 
 	GraphParameters(Method method) {
 		super(method, GraphParameter::new);
-new Exception().printStackTrace();
 		var depthParameter = super.stream().filter(GraphParameter::isDepthParameter).toList();
 
 		if (depthParameter.size() > 1) {
