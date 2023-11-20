@@ -57,7 +57,7 @@ We offer a very plain Spring Boot starter mitigating this under the following co
 [source,groovy,subs="verbatim,attributes"]
 ----
 dependencies {
-    implementation '{groupId}:{artifactId}-starter:{latest_version}'
+    implementation '{groupId}:{artifactId}-boot-starter:{latest_version}'
 }
 ----
 
