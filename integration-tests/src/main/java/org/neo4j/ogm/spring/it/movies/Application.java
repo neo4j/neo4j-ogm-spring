@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // SDN Neumann does not provide the necessary infrastructure for the repository metrics to work, so this must be disabled.
+
 @SpringBootApplication(exclude = RepositoryMetricsAutoConfiguration.class)
 @ImportAutoConfiguration(Neo4jOGMAutoConfiguration.class)
 
