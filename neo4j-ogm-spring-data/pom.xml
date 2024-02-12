@@ -47,7 +47,7 @@
 		<neo4j.version>5.15.0</neo4j.version>
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
 		<project.root>${basedir}/..</project.root>
-		<spotbugs-maven-plugin.version>4.8.2.0</spotbugs-maven-plugin.version>
+		<spotbugs-maven-plugin.version>4.8.3.1</spotbugs-maven-plugin.version>
 		<spotbugs.version>4.8.3</spotbugs.version>
 	</properties>
 
