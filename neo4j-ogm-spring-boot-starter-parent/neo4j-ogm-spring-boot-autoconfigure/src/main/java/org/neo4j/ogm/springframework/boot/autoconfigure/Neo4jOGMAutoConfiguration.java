@@ -42,6 +42,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.util.StringUtils;
 
 /**
@@ -60,9 +61,9 @@ public class Neo4jOGMAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean(PlatformTransactionManager.class)
-	public Neo4jTransactionManager transactionManager(SessionFactory sessionFactory,
+	public TransactionManager transactionManager(SessionFactory sessionFactory,
 	                                                  ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
-		Neo4jTransactionManager transactionManager = new Neo4jTransactionManager(sessionFactory);
+		TransactionManager transactionManager = new Neo4jTransactionManager(sessionFactory);
 		transactionManagerCustomizers.ifAvailable((customizers) -> customizers.customize(transactionManager));
 		return transactionManager;
 	}

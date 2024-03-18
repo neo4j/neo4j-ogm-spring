@@ -147,21 +147,18 @@
 			<groupId>org.apache.openwebbeans</groupId>
 			<artifactId>openwebbeans-impl</artifactId>
 			<version>${webbeans}</version>
-			<classifier>jakarta</classifier>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.openwebbeans</groupId>
 			<artifactId>openwebbeans-se</artifactId>
 			<version>${webbeans}</version>
-			<classifier>jakarta</classifier>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.openwebbeans</groupId>
 			<artifactId>openwebbeans-spi</artifactId>
 			<version>${webbeans}</version>
-			<classifier>jakarta</classifier>
 			<scope>test</scope>
 		</dependency>
 		<!-- OpenWebbeans pendant does not work… -->

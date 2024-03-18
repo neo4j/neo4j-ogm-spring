@@ -19,8 +19,6 @@ import static org.apache.webbeans.util.Asserts.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Offset.offset;
 
-import lombok.Builder;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -62,11 +60,20 @@ public class SpatialConversionTests {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Builder
 	static class ParamHolder {
 		String name;
 		double latitude;
 		double longitude;
+
+		ParamHolder(String name, double latitude, double longitude) {
+			this.name = name;
+			this.latitude = latitude;
+			this.longitude = longitude;
+		}
+
+		public static ParamHolderBuilder builder() {
+			return new ParamHolderBuilder();
+		}
 
 		Map<String, Object> toParameterMap() {
 			Map<String, Object> parameters = new HashMap<>();
@@ -74,6 +81,38 @@ public class SpatialConversionTests {
 			parameters.put("latitude", this.latitude);
 			parameters.put("longitude", this.longitude);
 			return parameters;
+		}
+
+		public static class ParamHolderBuilder {
+			private String name;
+			private double latitude;
+			private double longitude;
+
+			ParamHolderBuilder() {
+			}
+
+			public ParamHolderBuilder name(String name) {
+				this.name = name;
+				return this;
+			}
+
+			public ParamHolderBuilder latitude(double latitude) {
+				this.latitude = latitude;
+				return this;
+			}
+
+			public ParamHolderBuilder longitude(double longitude) {
+				this.longitude = longitude;
+				return this;
+			}
+
+			public ParamHolder build() {
+				return new ParamHolder(this.name, this.latitude, this.longitude);
+			}
+
+			public String toString() {
+				return "SpatialConversionTests.ParamHolder.ParamHolderBuilder(name=" + this.name + ", latitude=" + this.latitude + ", longitude=" + this.longitude + ")";
+			}
 		}
 	}
 
