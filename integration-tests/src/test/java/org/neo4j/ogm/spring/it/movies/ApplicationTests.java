@@ -23,16 +23,16 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.data.web.JsonPath;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.TransactionManager;
 import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -72,5 +72,12 @@ class ApplicationTests {
 		assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
 		assertThat(newPerson.getId()).isNotNegative();
 		assertThat(newPerson.getName()).isEqualTo("Michael Simons");
+	}
+
+	@Test
+	void transactionManagerAvailable(@Autowired ApplicationContext ctx) {
+
+		assertThat(ctx.getBean(TransactionManager.class))
+				.isNotNull().isInstanceOf(Neo4jTransactionManager.class);
 	}
 }
