@@ -13,8 +13,11 @@ Michael Simons <michael.simons@neo4j.com>
 [abstract]
 --
 This is an official fork of https://github.com/spring-projects/spring-data-neo4j/tree/5.3.x[Spring Data Neo4j 5.3.x].
-It keeps the legacy SDN5 version that wasn't an OGM on its own right alive and uses https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] under the hood.
-Support is provided on a best effort basis.
+SDN5 is in contrast to SDN6 and higher not an object mapper on it's own right, but uses https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] under the hood.
+If you are looking for an object mapper with a local (clientside) cache and dirty checking, you are at the right place.
+If you are looking for a more record oriented, possible reactive approach and stateless sessions, please use SDN6 or higher.
+
+Neo4j-OGM, this version of SDN as well as SDN6 are fully supported by Neo4j.
 --
 
 == Introduction
