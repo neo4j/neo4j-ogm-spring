@@ -48,7 +48,7 @@
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
 		<project.root>${basedir}/..</project.root>
 		<spotbugs-maven-plugin.version>4.8.4.0</spotbugs-maven-plugin.version>
-		<spotbugs.version>4.8.4</spotbugs.version>
+		<spotbugs.version>4.8.5</spotbugs.version>
 	</properties>
 
 	<dependencies>
