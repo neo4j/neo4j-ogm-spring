@@ -44,7 +44,7 @@
 
 		<java-module-name>org.neo4j.ogm.springframework.data</java-module-name>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
-		<neo4j.version>5.19.0</neo4j.version>
+		<neo4j.version>5.20.0</neo4j.version>
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
 		<project.root>${basedir}/..</project.root>
 		<spotbugs-maven-plugin.version>4.8.5.0</spotbugs-maven-plugin.version>
