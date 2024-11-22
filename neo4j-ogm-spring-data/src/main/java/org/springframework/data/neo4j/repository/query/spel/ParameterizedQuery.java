@@ -18,47 +18,44 @@ package org.springframework.data.neo4j.repository.query.spel;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+import org.springframework.data.expression.ValueExpressionParser;
 import org.springframework.data.repository.query.Parameters;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
-import org.springframework.data.repository.query.SpelEvaluator;
-import org.springframework.data.repository.query.SpelQueryContext;
-import org.springframework.data.repository.query.SpelQueryContext.EvaluatingSpelQueryContext;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
+import org.springframework.data.repository.query.ValueExpressionQueryRewriter;
+import org.springframework.data.repository.query.ValueExpressionQueryRewriter.EvaluatingValueExpressionQueryRewriter;
+import org.springframework.data.repository.query.ValueExpressionQueryRewriter.QueryExpressionEvaluator;
 
 public class ParameterizedQuery {
 
 	private final Parameters<?, ?> methodParameters;
-	private final SpelEvaluator spelEvaluator;
+	private final QueryExpressionEvaluator expressionEvaluator;
 
-	private ParameterizedQuery(Parameters<?, ?> methodParameters, SpelEvaluator spelEvaluator) {
+	private ParameterizedQuery(Parameters<?, ?> methodParameters, QueryExpressionEvaluator expressionEvaluator) {
 		this.methodParameters = methodParameters;
-		this.spelEvaluator = spelEvaluator;
+		this.expressionEvaluator = expressionEvaluator;
 	}
 
-	public static ParameterizedQuery getParameterizedQuery(String queryString, Parameters<?, ?> methodParameters,
-			QueryMethodEvaluationContextProvider evaluationContextProvider) {
+	public static ParameterizedQuery getParameterizedQuery(String queryString, Parameters<?, ?> methodParameters, QueryMethodValueEvaluationContextAccessor evaluationContextProvider) {
 
 		Neo4jQueryPlaceholderSupplier supplier = new Neo4jQueryPlaceholderSupplier();
 
-		EvaluatingSpelQueryContext context = SpelQueryContext.of( //
-				(index, prefix) -> supplier.parameterName(index), //
-				(prefix, name) -> supplier.decoratePlaceholder(name)) //
-				.withEvaluationContextProvider(evaluationContextProvider);
+		EvaluatingValueExpressionQueryRewriter rewriter = ValueExpressionQueryRewriter.of(ValueExpressionParser.create(),
+				(index, prefix) -> supplier.parameterName(index),
+				(prefix, name) -> supplier.decoratePlaceholder(name)).withEvaluationContextAccessor(evaluationContextProvider);
 
-		SpelEvaluator evaluator = context.parse(queryString, methodParameters);
-		return new ParameterizedQuery(methodParameters, evaluator);
+		return new ParameterizedQuery(methodParameters, rewriter.parse(queryString, methodParameters));
 	}
 
 	public Map<String, Object> resolveParameter(Object[] parameters,
-			BiFunction<Parameters<?, ?>, Object[], Map<String, Object>> nativePlaceholderFunction) {
+	                                            BiFunction<Parameters<?, ?>, Object[], Map<String, Object>> nativePlaceholderFunction) {
 
-		Map<String, Object> parameterValues = spelEvaluator.evaluate(parameters);
+		Map<String, Object> parameterValues = expressionEvaluator.evaluate(parameters);
 		Map<String, Object> nativeParameterValues = nativePlaceholderFunction.apply(methodParameters, parameters);
 		parameterValues.putAll(nativeParameterValues);
 		return parameterValues;
 	}
 
 	public String getQueryString() {
-		return spelEvaluator.getQueryString();
+		return expressionEvaluator.getQueryString();
 	}
-
 }

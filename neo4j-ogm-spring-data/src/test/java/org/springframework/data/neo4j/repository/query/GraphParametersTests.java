@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import org.junit.Test;
 import org.springframework.data.neo4j.annotation.Depth;
+import org.springframework.data.repository.query.ParametersSource;
 
 /**
  * @author Michael J. Simons
@@ -30,7 +31,7 @@ public class GraphParametersTests {
 	public void shouldWorkWithZeroDepthParameters() throws NoSuchMethodException {
 
 		var method = FakeRepo.class.getMethod("m1", String.class, String.class);
-		var graphParameters = new GraphParameters(method);
+		var graphParameters = new GraphParameters(ParametersSource.of(method));
 		assertThat(graphParameters.getDepthIndex()).isEqualTo(-1);
 	}
 
@@ -38,7 +39,7 @@ public class GraphParametersTests {
 	public void shouldWorkWithOneDepthParameter() throws NoSuchMethodException {
 
 		var method = FakeRepo.class.getMethod("m2", String.class, int.class);
-		var graphParameters = new GraphParameters(method);
+		var graphParameters = new GraphParameters(ParametersSource.of(method));
 		assertThat(graphParameters.getDepthIndex()).isOne();
 	}
 
@@ -46,7 +47,7 @@ public class GraphParametersTests {
 	public void mustFailOnMultipleDepthParameters() throws NoSuchMethodException {
 
 		var method = FakeRepo.class.getMethod("m3", String.class, int.class, int.class);
-		assertThatIllegalStateException().isThrownBy(() -> new GraphParameters(method))
+		assertThatIllegalStateException().isThrownBy(() -> new GraphParameters(ParametersSource.of(method)))
 				.withMessage("Found multiple @Depth annotations on method public abstract void org.springframework.data.neo4j.repository.query.GraphParametersTests$FakeRepo.m3(java.lang.String,int,int)! Only one allowed!");
 	}
 

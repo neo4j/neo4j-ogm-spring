@@ -28,6 +28,7 @@ import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
 import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ReflectionUtils;
@@ -45,22 +46,10 @@ public class GraphQueryLookupStrategy implements QueryLookupStrategy {
 
 	private final MetaData metaData;
 	private final Session session;
-	private final QueryMethodEvaluationContextProvider evaluationContextProvider;
+	private final QueryMethodValueEvaluationContextAccessor evaluationContextProvider;
 	private final MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext;
 
-	/**
-	 * @param session
-	 * @param evaluationContextProvider
-	 * @deprecated since 5.1.0, use
-	 *             {@link GraphQueryLookupStrategy#GraphQueryLookupStrategy(Session, QueryMethodEvaluationContextProvider, MappingContext)}
-	 *             instead and provide the mapping context.
-	 */
-	@Deprecated
-	public GraphQueryLookupStrategy(Session session, QueryMethodEvaluationContextProvider evaluationContextProvider) {
-		this(session, evaluationContextProvider, null);
-	}
-
-	public GraphQueryLookupStrategy(Session session, QueryMethodEvaluationContextProvider evaluationContextProvider,
+	public GraphQueryLookupStrategy(Session session, QueryMethodValueEvaluationContextAccessor evaluationContextProvider,
 			@Nullable MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext) {
 
 		this.metaData = getMetaData(session);

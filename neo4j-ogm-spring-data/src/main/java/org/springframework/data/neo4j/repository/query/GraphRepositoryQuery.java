@@ -27,6 +27,7 @@ import org.springframework.data.neo4j.repository.query.spel.ParameterizedQuery;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.Parameters;
 import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
 import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.data.repository.query.ResultProcessor;
 
@@ -44,14 +45,14 @@ public class GraphRepositoryQuery extends AbstractGraphRepositoryQuery {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GraphRepositoryQuery.class);
 
-	private final QueryMethodEvaluationContextProvider evaluationContextProvider;
+	private final QueryMethodValueEvaluationContextAccessor evaluationContextProvider;
 	private final QueryResultInstantiator entityInstantiator;
 	private final boolean isExistsQuery;
 
 	private ParameterizedQuery parameterizedQuery;
 
 	GraphRepositoryQuery(GraphQueryMethod graphQueryMethod, MetaData metaData, Session session,
-			QueryMethodEvaluationContextProvider evaluationContextProvider
+		QueryMethodValueEvaluationContextAccessor evaluationContextProvider
 	) {
 
 		super(graphQueryMethod, metaData, session);

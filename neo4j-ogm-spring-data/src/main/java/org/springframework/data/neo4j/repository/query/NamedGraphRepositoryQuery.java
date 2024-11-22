@@ -17,7 +17,7 @@ package org.springframework.data.neo4j.repository.query;
 
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.session.Session;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
 import org.springframework.lang.Nullable;
 
 /**
@@ -34,13 +34,13 @@ public class NamedGraphRepositoryQuery extends GraphRepositoryQuery {
 	private @Nullable final String countQuery;
 
 	NamedGraphRepositoryQuery(GraphQueryMethod graphQueryMethod, MetaData metaData, Session session, String cypherQuery,
-			QueryMethodEvaluationContextProvider evaluationContextProvider) {
+			QueryMethodValueEvaluationContextAccessor evaluationContextProvider) {
 
 		this(graphQueryMethod, metaData, session, cypherQuery, null, evaluationContextProvider);
 	}
 
 	NamedGraphRepositoryQuery(GraphQueryMethod graphQueryMethod, MetaData metaData, Session session, String cypherQuery,
-			String countQuery, QueryMethodEvaluationContextProvider evaluationContextProvider) {
+			String countQuery, QueryMethodValueEvaluationContextAccessor evaluationContextProvider) {
 
 		super(graphQueryMethod, metaData, session, evaluationContextProvider);
 		this.cypherQuery = cypherQuery;

@@ -24,6 +24,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.Parameters;
+import org.springframework.data.repository.query.ParametersSource;
 import org.springframework.data.util.TypeInformation;
 
 /**
@@ -36,13 +37,13 @@ public class GraphParameters extends Parameters<GraphParameters, GraphParameters
 
 	private final int depthIndex;
 
-	GraphParameters(Method method) {
-		super(method, GraphParameter::new);
+	GraphParameters(ParametersSource parametersSource) {
+		super(parametersSource, GraphParameter::new);
 		var depthParameter = super.stream().filter(GraphParameter::isDepthParameter).toList();
 
 		if (depthParameter.size() > 1) {
 			throw new IllegalStateException(String.format("Found multiple @Depth annotations on method %s! Only one allowed!",
-				method));
+				parametersSource.getMethod()));
 		} else if (depthParameter.isEmpty()) {
 			depthIndex = -1;
 		} else {
