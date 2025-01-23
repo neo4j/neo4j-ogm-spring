@@ -193,7 +193,7 @@
 		<maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.9.4</maven.version>
-		<neo4j.ogm.version>4.0.13</neo4j.ogm.version>
+		<neo4j.ogm.version>4.0.14</neo4j.ogm.version>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
 		<spring-boot.version>3.4.0</spring-boot.version>
