@@ -27,7 +27,7 @@
 
 	<groupId>org.neo4j</groupId>
 	<artifactId>neo4j-ogm-spring-parent</artifactId>
-	<version>1.2.3</version>
+	<version>1.2.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Neo4j-OGM (Spring Parent)</name>
@@ -718,8 +718,4 @@
 		</profile>
 		<?SORTPOM RESUME?>
 	</profiles>
-
-  <scm>
-    <tag>1.2.3</tag>
-  </scm>
 </project>
