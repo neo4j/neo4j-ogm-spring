@@ -13,7 +13,7 @@ Michael Simons <michael.simons@neo4j.com>
 [abstract]
 --
 This is an official fork of https://github.com/spring-projects/spring-data-neo4j/tree/5.3.x[Spring Data Neo4j 5.3.x].
-SDN5 is in contrast to SDN6 and higher not an object mapper on it's own right, but uses https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] under the hood.
+SDN5 is in contrast to SDN6 and higher not an object mapper on its own right, but uses https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] under the hood.
 If you are looking for an object mapper with a local (clientside) cache and dirty checking, you are at the right place.
 If you are looking for a more record oriented, possible reactive approach and stateless sessions, please use SDN6 or higher.
 
@@ -24,8 +24,8 @@ Neo4j-OGM, this version of SDN as well as SDN6 are fully supported by Neo4j.
 
 The fork has no additional functionality but is updated in two dimensions:
 
-* It uses the latest Spring Data Commons (3.1.3 as of writing) and fixes breaking changes that came with it since SDN 5.3.x
-* It uses the latest Neo4j-OGM 4.0.6 and thus is compatible with Neo4j 5.x
+* It uses the latest Spring Data Commons and fixes breaking changes that came with it since SDN 5.3.x
+* It uses the latest Neo4j-OGM 4.x release and thus is compatible with Neo4j 5.x
 * However, Java 17 is required due to the requirements of the latest Neo4j-Java-Driver underpinning Neo4j-OGM 4
 
 NOTE: We restarted the version numbering of this fork at 1.0.0 and removed the tags and branches from the fork. Of course, they will be preserved at https://github.com/spring-projects/spring-data-neo4j/releases[spring-projects/spring-data-neo4j/releases,] and we have no intention to change that.
