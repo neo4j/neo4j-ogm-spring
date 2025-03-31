@@ -194,7 +194,7 @@
 		<maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.9.4</maven.version>
-		<neo4j.ogm.version>4.0.16</neo4j.ogm.version>
+		<neo4j.ogm.version>4.0.17</neo4j.ogm.version>
 		<slf4j>2.0.16</slf4j>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
