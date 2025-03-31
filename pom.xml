@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.springframework.data.build</groupId>
 		<artifactId>spring-data-parent</artifactId>
-		<version>3.4.2</version>
+		<version>3.4.4</version>
 	</parent>
 
 	<groupId>org.neo4j</groupId>
@@ -198,8 +198,8 @@
 		<slf4j>2.0.16</slf4j>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
-		<spring-boot.version>3.4.2</spring-boot.version>
-		<springdata.commons>3.4.2</springdata.commons>
+		<spring-boot.version>3.4.4<s4<s4<s4<spring-boot.version>
+		<springdata.commons>3.4.4</springdata.commons>
 	</properties>
 
 	<build>
