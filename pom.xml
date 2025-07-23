@@ -199,8 +199,8 @@
 		<slf4j>2.0.16</slf4j>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
-		<spring-boot.version>3.4.5</spring-boot.version>
-		<springdata.commons>3.4.5</springdata.commons>
+		<spring-boot.version>3.5.3</spring-boot.version>
+		<springdata.commons>3.5.2</springdata.commons>
 	</properties>
 
 	<build>
