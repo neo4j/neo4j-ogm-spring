@@ -201,6 +201,7 @@
 		<source.level>${java.version}</source.level>
 		<spring-boot.version>3.5.3</spring-boot.version>
 		<springdata.commons>3.5.2</springdata.commons>
+		<versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
 	</properties>
 
 	<build>
@@ -293,6 +294,11 @@
 								<type>LICENSE_NAME</type>
 								<rule>APPROVE</rule>
 								<value>The MIT License (MIT)</value>
+							</dependencyPolicy>
+							<dependencyPolicy>
+								<type>LICENSE_NAME</type>
+								<rule>APPROVE</rule>
+								<value>MIT</value>
 							</dependencyPolicy>
 							<dependencyPolicy>
 								<type>ARTIFACT_PATTERN</type>
@@ -418,6 +424,46 @@
 							</configuration>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<!--
+					 Update all dependencies with:
+					 ```
+					  ./mvnw versions:update-properties
+					 ```
+					 All snapshots, alpha. beta, release and other candidates have been excluded.
+					 Some dependencies have been excluded from automatic updates all together ($reasons, you know…)
+					 -->
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${versions-maven-plugin.version}</version>
+					<configuration>
+						<generateBackupPoms>false</generateBackupPoms>
+						<ruleSet>
+							<ignoreVersions>
+								<ignoreVersion>
+									<type>regex</type>
+									<version>(?i)(.+-SNAPSHOT|.+-M\d|.+-?RC\d?|.+CR\d)</version>
+								</ignoreVersion>
+								<ignoreVersion>
+									<type>regex</type>
+									<version>(?i).+-?(alpha|beta).+</version>
+								</ignoreVersion>
+							</ignoreVersions>
+							<rules>
+								<rule>
+									<groupId>org.neo4j.test</groupId>
+									<artifactId>neo4j-harness</artifactId>
+									<ignoreVersions>
+										<ignoreVersion>
+											<type>range</type>
+											<version>[2025.01.0,)</version>
+										</ignoreVersion>
+									</ignoreVersions>
+								</rule>
+							</rules>
+						</ruleSet>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
