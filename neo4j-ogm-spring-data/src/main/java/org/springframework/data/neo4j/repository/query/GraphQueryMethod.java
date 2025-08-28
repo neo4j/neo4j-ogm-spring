@@ -50,7 +50,7 @@ public class GraphQueryMethod extends QueryMethod {
 	private @Nullable MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext;
 
 	public GraphQueryMethod(Method method, RepositoryMetadata metadata, ProjectionFactory factory) {
-		super(method, metadata, factory);
+		super(method, metadata, factory, GraphParameters::new);
 
 		this.method = method;
 		this.queryAnnotation = AnnotatedElementUtils.findMergedAnnotation(method, Query.class);
@@ -65,16 +65,6 @@ public class GraphQueryMethod extends QueryMethod {
 			throw new IllegalArgumentException(method.getName() + " cannot have both a method @Depth and a parameter @Depth");
 		}
 
-	}
-
-	@Override
-	protected Parameters<?, ?> createParameters(ParametersSource parametersSource) {
-		return new GraphParameters(parametersSource);
-	}
-
-	@Override
-	public GraphParameters getParameters() {
-		return (GraphParameters) super.getParameters();
 	}
 
 	public MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> getMappingContext() {

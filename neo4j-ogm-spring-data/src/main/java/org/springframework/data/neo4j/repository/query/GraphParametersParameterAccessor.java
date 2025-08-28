@@ -15,14 +15,14 @@
  */
 package org.springframework.data.neo4j.repository.query;
 
+import java.util.Objects;
+
 import org.neo4j.ogm.cypher.query.SortOrder;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.util.PagingAndSortingUtils;
 import org.springframework.data.repository.query.ParametersParameterAccessor;
-import org.springframework.lang.Nullable;
 
 /**
  * Custom {@link ParametersParameterAccessor} to allow access to the {@link Depth} parameter.
@@ -56,15 +56,11 @@ public class GraphParametersParameterAccessor extends ParametersParameterAccesso
 			return value == null ? DEFAULT_QUERY_DEPTH : (int) value;
 		}
 
-		GraphParameters graphParameters = method.getParameters();
-
-		int depthIndex = graphParameters.getDepthIndex();
-
-		if (depthIndex != -1) {
-			return getValue(depthIndex);
-		} else {
-			return DEFAULT_QUERY_DEPTH;
+		var parameters = method.getParameters();
+		if(parameters instanceof GraphParameters graphParameters && graphParameters.getDepthIndex() != -1) {
+			return Objects.requireNonNullElse(getValue(graphParameters.getDepthIndex()), DEFAULT_QUERY_DEPTH);
 		}
+		return DEFAULT_QUERY_DEPTH;
 	}
 
 	@Override
