@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.springframework.data.build</groupId>
 		<artifactId>spring-data-parent</artifactId>
-		<version>3.4.5</version>
+		<version>3.5.4</version>
 	</parent>
 
 	<groupId>org.neo4j</groupId>
@@ -187,21 +187,21 @@
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-enforcer-plugin.version>3.6.1</maven-enforcer-plugin.version>
 		<maven-enforcer-plugin.version>3.6.1</maven-enforcer-plugin.version>
-		<maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+		<maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
 		<maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
 		<maven-release-plugin.version>3.1.1</maven-release-plugin.version>
-		<maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.9.4</maven.version>
-		<neo4j.ogm.version>4.0.19</neo4j.ogm.version>
+		<neo4j.ogm.version>4.0.20</neo4j.ogm.version>
 		<slf4j>2.0.17</slf4j>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
 		<spring-boot.version>3.5.5</spring-boot.version>
-		<springdata.commons>3.5.3</springdata.commons>
-		<versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
+		<springdata.commons>3.5.4</springdata.commons>
+		<versions-maven-plugin.version>2.19.0</versions-maven-plugin.version>
 	</properties>
 
 	<build>
