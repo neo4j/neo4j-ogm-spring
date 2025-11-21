@@ -24,9 +24,10 @@ import java.util.function.Predicate;
 
 import org.neo4j.ogm.cypher.BooleanOperator;
 import org.neo4j.ogm.cypher.Filter;
-import org.springframework.data.mapping.PropertyPath;
+
+import org.springframework.data.core.PropertyPath;
 import org.springframework.data.repository.query.parser.Part;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * The name of this class is wrong: It builds a list of filters, not a single filter. Starting with Neo4j-OGM 4.0,

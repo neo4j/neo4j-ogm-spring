@@ -19,13 +19,13 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.data.core.TypeInformation;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.Parameters;
 import org.springframework.data.repository.query.ParametersSource;
-import org.springframework.data.util.TypeInformation;
 
 /**
  * Custom extension of {@link Parameters} discovering additional to handle @link{Depth} special parameter.

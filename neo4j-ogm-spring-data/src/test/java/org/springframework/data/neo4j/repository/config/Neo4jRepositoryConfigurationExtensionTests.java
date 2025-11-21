@@ -145,7 +145,7 @@ public class Neo4jRepositoryConfigurationExtensionTests {
 
 		RepositoryConfigurationExtension extension = new Neo4jRepositoryConfigurationExtension();
 		AnnotationRepositoryConfigurationSource configurationSource = new AnnotationRepositoryConfigurationSource(metadata,
-				EnableNeo4jRepositories.class, new PathMatchingResourcePatternResolver(), new StandardEnvironment(), factory);
+				EnableNeo4jRepositories.class, factory, new StandardEnvironment(), factory, null);
 		extension.registerBeansForRoot(factory, configurationSource);
 
 		return (DefaultListableBeanFactory) factory.getBeanFactory();

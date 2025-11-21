@@ -17,7 +17,7 @@ package org.springframework.data.neo4j.util;
 
 import org.neo4j.ogm.cypher.query.SortOrder;
 import org.springframework.data.domain.Sort;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Nicolas Mervaillie

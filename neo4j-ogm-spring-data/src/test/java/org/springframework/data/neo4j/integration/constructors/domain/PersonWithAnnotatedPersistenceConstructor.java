@@ -18,7 +18,7 @@ package org.springframework.data.neo4j.integration.constructors.domain;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.util.Assert;
 
 /**
@@ -35,7 +35,7 @@ public class PersonWithAnnotatedPersistenceConstructor {
 		this.lastName = lastName;
 	}
 
-	@PersistenceConstructor
+	@PersistenceCreator
 	public PersonWithAnnotatedPersistenceConstructor(String firstName, String lastName) {
 		Assert.notNull(firstName, "firstName should not be null");
 		Assert.notNull(lastName, "lastName should not be null");

@@ -25,7 +25,7 @@ import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.repository.query.filter.FilterBuilder;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A template query based on filters. {@link #createExecutableQuery(Map)} is used to create an executable query from

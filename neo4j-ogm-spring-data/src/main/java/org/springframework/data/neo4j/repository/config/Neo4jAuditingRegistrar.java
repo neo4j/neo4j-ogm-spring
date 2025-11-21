@@ -28,6 +28,7 @@ import org.springframework.data.config.ParsingUtils;
 import org.springframework.data.mapping.context.PersistentEntities;
 import org.springframework.data.neo4j.annotation.EnableNeo4jAuditing;
 import org.springframework.data.neo4j.repository.support.Neo4jAuditingBeanPostProcessor;
+import org.springframework.data.neo4j.repository.support.Neo4jRepositoryFactoryBean;
 import org.springframework.util.Assert;
 
 /**
@@ -54,6 +55,7 @@ public class Neo4jAuditingRegistrar extends AuditingBeanDefinitionRegistrarSuppo
 
 		BeanDefinitionBuilder definition = BeanDefinitionBuilder
 				.genericBeanDefinition(Neo4jMappingContextFactoryBean.class);
+		definition.addConstructorArgValue(Neo4jRepositoryConfigurationExtension.DEFAULT_SESSION_FACTORY_BEAN_NAME);
 		definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
 		BeanDefinitionBuilder persistentEntities = BeanDefinitionBuilder.genericBeanDefinition(PersistentEntities.class)

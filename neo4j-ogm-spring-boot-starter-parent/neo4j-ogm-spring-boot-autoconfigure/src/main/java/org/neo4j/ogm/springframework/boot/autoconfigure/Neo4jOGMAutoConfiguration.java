@@ -18,11 +18,11 @@ package org.neo4j.ogm.springframework.boot.autoconfigure;
 import java.util.List;
 
 import org.neo4j.driver.Driver;
-import org.neo4j.ogm.config.AutoIndexMode;
 import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.drivers.bolt.driver.BoltDriver;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.event.EventListener;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -32,14 +32,13 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.data.neo4j.Neo4jDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScanPackages;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jAutoConfiguration;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jConnectionDetails;
-import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.data.neo4j.autoconfigure.DataNeo4jAutoConfiguration;
+import org.springframework.boot.neo4j.autoconfigure.Neo4jAutoConfiguration;
+import org.springframework.boot.neo4j.autoconfigure.Neo4jConnectionDetails;
+import org.springframework.boot.persistence.autoconfigure.EntityScanPackages;
+import org.springframework.boot.transaction.autoconfigure.TransactionManagerCustomizers;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionManager;
@@ -55,7 +54,7 @@ import org.springframework.util.StringUtils;
 @ConditionalOnClass(SessionFactory.class)
 @ConditionalOnBean(Driver.class)
 @AutoConfigureAfter( {Neo4jAutoConfiguration.class})
-@AutoConfigureBefore( {Neo4jDataAutoConfiguration.class})
+@AutoConfigureBefore( {DataNeo4jAutoConfiguration.class})
 @EnableConfigurationProperties( {Neo4jOGMProperties.class})
 public class Neo4jOGMAutoConfiguration {
 
@@ -114,9 +113,6 @@ public class Neo4jOGMAutoConfiguration {
 		}
 
 		SessionFactory sessionFactory = new SessionFactory(ogmDriver, packages);
-		if (configuration.getAutoIndex() != AutoIndexMode.NONE) {
-			sessionFactory.runAutoIndexManager(configuration);
-		}
 		eventListeners.orderedStream().forEach(sessionFactory::register);
 		return sessionFactory;
 	}

@@ -15,21 +15,20 @@
  */
 package org.neo4j.ogm.spring.it.movies;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.neo4j.driver.Driver;
 import org.neo4j.ogm.springframework.boot.autoconfigure.Neo4jOGMAutoConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.neo4j.Neo4jContainer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.data.neo4j.test.autoconfigure.DataNeo4jTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michael J. Simons
@@ -41,7 +40,7 @@ public class PeopleRepositoryTests {
 
 	@Container
 	@ServiceConnection
-	static Neo4jContainer<?> neo4j = new Neo4jContainer<>("neo4j:5");
+	static Neo4jContainer neo4j = new Neo4jContainer("neo4j:5");
 
 	@BeforeAll
 	static void prepareDataSet(@Autowired Driver driver) {

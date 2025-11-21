@@ -16,12 +16,13 @@
 package org.springframework.data.neo4j.mapping;
 
 import org.neo4j.ogm.metadata.MetaData;
+
+import org.springframework.data.core.TypeInformation;
 import org.springframework.data.mapping.MappingException;
 import org.springframework.data.mapping.model.BasicPersistentEntity;
 import org.springframework.data.neo4j.mapping.Neo4jPersistentProperty.PropertyType;
 import org.springframework.data.support.IsNewStrategy;
 import org.springframework.data.util.Lazy;
-import org.springframework.data.util.TypeInformation;
 
 /**
  * This class implements Spring Data's PersistentEntity interface, scavenging the required data from the OGM's mapping

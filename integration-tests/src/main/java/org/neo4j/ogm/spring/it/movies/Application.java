@@ -17,14 +17,14 @@ package org.neo4j.ogm.spring.it.movies;
 
 import org.neo4j.ogm.springframework.boot.autoconfigure.Neo4jOGMAutoConfiguration;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.metrics.data.RepositoryMetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.data.autoconfigure.metrics.DataRepositoryMetricsAutoConfiguration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 // SDN Neumann does not provide the necessary infrastructure for the repository metrics to work, so this must be disabled.
 
-@SpringBootApplication(exclude = RepositoryMetricsAutoConfiguration.class)
+@SpringBootApplication(exclude = DataRepositoryMetricsAutoConfiguration.class)
 @ImportAutoConfiguration(Neo4jOGMAutoConfiguration.class)
 @EnableNeo4jRepositories
 public class Application {

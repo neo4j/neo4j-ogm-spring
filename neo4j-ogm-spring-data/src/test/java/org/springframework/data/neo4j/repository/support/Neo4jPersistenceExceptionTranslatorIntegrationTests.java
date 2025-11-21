@@ -15,13 +15,11 @@
  */
 package org.springframework.data.neo4j.repository.support;
 
-
 import java.time.Year;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.harness.Neo4j;
-import org.neo4j.ogm.config.AutoIndexMode;
 import org.neo4j.ogm.exception.core.InvalidPropertyFieldException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +67,6 @@ public class Neo4jPersistenceExceptionTranslatorIntegrationTests {
 		org.neo4j.ogm.config.Configuration neo4jOGMConfiguration(Neo4j neo4jTestServer) {
 			return new org.neo4j.ogm.config.Configuration.Builder() //
 					.uri(neo4jTestServer.boltURI().toString()) //
-					.autoIndex(AutoIndexMode.NONE.getName()) //
 					.build();
 		}
 

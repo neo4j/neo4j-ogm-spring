@@ -33,7 +33,7 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.TransactionManager;
-import org.testcontainers.containers.Neo4jContainer;
+import org.testcontainers.neo4j.Neo4jContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ class ApplicationTests {
 
 	@Container
 	@ServiceConnection
-	static Neo4jContainer<?> neo4j = new Neo4jContainer<>("neo4j:5");
+	static Neo4jContainer neo4j = new Neo4jContainer("neo4j:5");
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 

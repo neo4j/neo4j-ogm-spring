@@ -86,7 +86,7 @@ public class BookmarkTransactionTests {
 				.collect(Collectors.toList());
 
 		assertThat(bookmarksInDriver).containsAll(
-				bookmarks.stream().map(InternalBookmark::parse).collect(Collectors.toList()));
+				bookmarks.stream().map(Bookmark::from).collect(Collectors.toList()));
 
 	}
 

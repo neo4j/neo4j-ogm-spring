@@ -40,18 +40,6 @@ public class Neo4jMappingContextFactoryBean extends AbstractFactoryBean<Neo4jMap
 	private ListableBeanFactory beanFactory;
 
 	/**
-	 * Uses the default session factory name
-	 * {@link Neo4jRepositoryConfigurationExtension#DEFAULT_SESSION_FACTORY_BEAN_NAME} for finding the session factory
-	 * passed to the {@link Neo4jMappingContext}.
-	 *
-	 * @deprecated since 5.1.0, use {@link #Neo4jMappingContextFactoryBean(String)} instead
-	 */
-	@Deprecated
-	public Neo4jMappingContextFactoryBean() {
-		this(Neo4jRepositoryConfigurationExtension.DEFAULT_SESSION_FACTORY_BEAN_NAME);
-	}
-
-	/**
 	 * Configures the mapping context with a named {@link SessionFactory}.
 	 *
 	 * @param sessionFactoryBeanName must not be {@literal null} or empty.

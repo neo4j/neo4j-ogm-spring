@@ -17,10 +17,12 @@ package org.springframework.data.neo4j.repository.support;
 
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.neo4j.mapping.Neo4jMappingContext;
 import org.springframework.data.neo4j.mapping.Neo4jPersistentEntity;
@@ -30,11 +32,8 @@ import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
-import org.springframework.data.repository.query.ExtensionAwareQueryMethodEvaluationContextProvider;
 import org.springframework.data.repository.query.QueryLookupStrategy;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
 import org.springframework.data.repository.query.ValueExpressionDelegate;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -53,17 +52,8 @@ public class Neo4jRepositoryFactory extends RepositoryFactorySupport {
 
 	private final Session session;
 
-	private @Nullable final MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext;
-
-	/**
-	 * @param session
-	 * @deprecated since 5.1.0, use {@link Neo4jRepositoryFactory#Neo4jRepositoryFactory(Session, MappingContext)} instead
-	 *             and provide the mapping context.
-	 */
-	@Deprecated
-	public Neo4jRepositoryFactory(Session session) {
-		this(session, null);
-	}
+	@Nullable
+	private final MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext;
 
 	public Neo4jRepositoryFactory(Session session, MappingContext<Neo4jPersistentEntity<?>, Neo4jPersistentProperty> mappingContext) {
 		Assert.notNull(session, "Session must not be null!");
@@ -91,10 +81,9 @@ public class Neo4jRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	@Override
-	public <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> type) {
-		Assert.notNull(type, "Domain class must not be null!");
+	public EntityInformation<?, ?> getEntityInformation(RepositoryMetadata metadata) {
 
-		return new GraphEntityInformation<>(((Neo4jSession) session).metaData(), type);
+		return new GraphEntityInformation<>(((Neo4jSession) session).metaData(), metadata.getDomainType());
 	}
 
 	@Override
@@ -108,7 +97,7 @@ public class Neo4jRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	@Override
-	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(QueryLookupStrategy.Key key,
 	                                                               ValueExpressionDelegate valueExpressionDelegate) {
 		return Optional.of(new GraphQueryLookupStrategy(session, valueExpressionDelegate.getEvaluationContextAccessor(), this.mappingContext));
 	}

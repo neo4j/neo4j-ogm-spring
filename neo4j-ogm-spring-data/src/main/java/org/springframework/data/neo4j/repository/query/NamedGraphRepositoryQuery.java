@@ -18,7 +18,7 @@ package org.springframework.data.neo4j.repository.query;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.session.Session;
 import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Specialisation of {@link GraphRepositoryQuery} that creates queries from named queries defined in

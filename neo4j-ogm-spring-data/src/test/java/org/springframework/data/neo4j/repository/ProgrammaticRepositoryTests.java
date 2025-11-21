@@ -100,7 +100,7 @@ public class ProgrammaticRepositoryTests {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
-				RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+				RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 				movieRepository = factory.getRepository(MovieRepository.class);
 
@@ -120,7 +120,7 @@ public class ProgrammaticRepositoryTests {
 	@Test // DATAGRAPH-847
 	public void shouldBeAbleToDeleteAllViaRepository() {
 
-		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 		UserRepository userRepository = factory.getRepository(UserRepository.class);
 
@@ -138,7 +138,7 @@ public class ProgrammaticRepositoryTests {
 	@Test // DATAGRAPH-813
 	public void shouldDeleteUserByNameAndReturnCountOfDeletedUsers() {
 
-		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 		UserRepository userRepository = factory.getRepository(UserRepository.class);
 
@@ -147,14 +147,14 @@ public class ProgrammaticRepositoryTests {
 		userRepository.save(userA);
 		assertThat(userRepository.count()).isEqualTo(1);
 
-		assertThat(userRepository.deleteByLastname("A")).isEqualTo(new Long(1));
+		assertThat(userRepository.deleteByLastname("A")).isEqualTo(1L);
 		assertThat(userRepository.count()).isEqualTo(0);
 	}
 
 	@Test // DATAGRAPH-813
 	public void shouldDeleteUserByNameAndReturnListOfDeletedUserIds() {
 
-		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 		UserRepository userRepository = factory.getRepository(UserRepository.class);
 
@@ -177,7 +177,7 @@ public class ProgrammaticRepositoryTests {
 	@Test
 	public void shouldBeAbleToDeleteUserWithRelationships() {
 
-		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 		UserRepository userRepository = factory.getRepository(UserRepository.class);
 
@@ -199,7 +199,7 @@ public class ProgrammaticRepositoryTests {
 	@Test // DATAGRAPH-813
 	public void shouldCountUserByName() {
 
-		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session);
+		RepositoryFactorySupport factory = new Neo4jRepositoryFactory(session, null);
 
 		UserRepository userRepository = factory.getRepository(UserRepository.class);
 
@@ -207,6 +207,6 @@ public class ProgrammaticRepositoryTests {
 
 		userRepository.save(userA);
 
-		assertThat(userRepository.countByLastname("A")).isEqualTo(new Long(1));
+		assertThat(userRepository.countByLastname("A")).isEqualTo(1L);
 	}
 }

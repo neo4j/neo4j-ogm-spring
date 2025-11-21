@@ -25,7 +25,7 @@ import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.neo4j.conversion.Neo4jOgmEntityInstantiatorAdapter;
 import org.springframework.data.neo4j.mapping.Neo4jPersistentEntity;
 import org.springframework.data.neo4j.mapping.Neo4jPersistentProperty;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This class uses the {@link Neo4jOgmEntityInstantiatorAdapter} that came with OGM 3.1.0+ if possible, otherwise falls back
