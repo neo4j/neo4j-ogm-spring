@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.neo4j</groupId>
 		<artifactId>neo4j-ogm-spring-boot-starter-parent</artifactId>
-		<version>2.0.0</version>
+		<version>2.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>neo4j-ogm-spring-boot-autoconfigure</artifactId>
