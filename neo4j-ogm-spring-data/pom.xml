@@ -34,7 +34,7 @@
 
 	<properties>
 
-		<caffeine.version>3.2.2</caffeine.version>
+		<caffeine.version>3.2.3</caffeine.version>
 
 		<cdi>4.1.0</cdi>
 		<jakarta.el-api.version>6.0.1</jakarta.el-api.version>
@@ -44,12 +44,12 @@
 
 		<java-module-name>org.neo4j.ogm.springframework.data</java-module-name>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
-		<kotlin>2.2.20</kotlin>
-		<neo4j.version>5.26.12</neo4j.version>
+		<kotlin>2.3.0</kotlin>
+		<neo4j.version>5.26.19</neo4j.version>
 		<ogm.properties>ogm-bolt.properties</ogm.properties>
 		<project.root>${basedir}/..</project.root>
-		<spotbugs-maven-plugin.version>4.9.4.2</spotbugs-maven-plugin.version>
-		<spotbugs.version>4.9.5</spotbugs.version>
+		<spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
+		<spotbugs.version>4.9.8</spotbugs.version>
 	</properties>
 
 	<dependencies>
