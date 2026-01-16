@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>org.neo4j</groupId>
 		<artifactId>neo4j-ogm-spring-parent</artifactId>
-		<version>2.0.1</version>
+		<version>2.0.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>neo4j-ogm-spring-integration-tests</artifactId>
@@ -161,8 +161,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-  <scm>
-    <tag>2.0.1</tag>
-  </scm>
 </project>
