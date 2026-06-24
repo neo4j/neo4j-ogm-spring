@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.springframework.data.build</groupId>
 		<artifactId>spring-data-parent</artifactId>
-		<version>4.0.0</version>
+		<version>4.1.0</version>
 	</parent>
 
 	<groupId>org.neo4j</groupId>
@@ -181,26 +181,26 @@
 		<java.version>17</java.version>
 		<kotlin.api.target>2.0</kotlin.api.target>
 		<license-maven-plugin.version>5.0.0</license-maven-plugin.version>
-		<logback>1.5.32</logback>
+		<logback>1.5.35</logback>
 		<maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
 		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-enforcer-plugin.version>3.6.1</maven-enforcer-plugin.version>
-		<maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
-		<maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
+		<maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+		<maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
 		<maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
-		<maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.9.12</maven.version>
-		<neo4j.ogm.version>5.0.4</neo4j.ogm.version>
-		<slf4j>2.0.17</slf4j>
+		<neo4j.ogm.version>5.0.7</neo4j.ogm.version>
+		<slf4j>2.0.18</slf4j>
 		<sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
 		<source.level>${java.version}</source.level>
-		<spring-boot.version>4.0.3</spring-boot.version>
-		<springdata.commons>4.0.3</springdata.commons>
+		<spring-boot.version>4.1.0</spring-boot.version>
+		<springdata.commons>4.1.0</springdata.commons>
 		<versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
 	</properties>
 
