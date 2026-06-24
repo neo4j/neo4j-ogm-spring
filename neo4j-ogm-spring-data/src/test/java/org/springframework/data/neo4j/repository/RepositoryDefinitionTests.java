@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ import org.springframework.data.neo4j.repository.sample.repo.MovieRepository;
 import org.springframework.data.neo4j.test.GraphDatabaseServiceAssert;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -43,7 +43,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = RepositoryDefinitionTests.RepositoriesTestContext.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class RepositoryDefinitionTests {
 
 	@Autowired private GraphDatabaseService graphDatabaseService;
@@ -52,7 +52,7 @@ public class RepositoryDefinitionTests {
 
 	@Autowired private MovieRepository movieRepository;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

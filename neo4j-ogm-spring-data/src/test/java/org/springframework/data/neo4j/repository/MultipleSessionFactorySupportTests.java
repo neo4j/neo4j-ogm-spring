@@ -26,14 +26,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runner.RunWith;
-import org.junit.runners.model.Statement;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
@@ -54,7 +54,7 @@ import org.springframework.data.neo4j.examples.restaurants.repo.RestaurantReposi
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.ReflectionUtils;
@@ -65,10 +65,10 @@ import org.springframework.util.ReflectionUtils;
 @ContextConfiguration(classes = { MultipleSessionFactorySupportTests.BaseConfiguration.class,
 		MultipleSessionFactorySupportTests.FriendsConfiguration.class,
 		MultipleSessionFactorySupportTests.RestaurantsConfiguration.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class MultipleSessionFactorySupportTests {
 
-	@Rule
+	@RegisterExtension
 	public final LoggerRule loggerRule = new LoggerRule();
 
 	private static final String BEAN_NAME_FRIENDS_SESSION_FACTORY = "sessionFactoryFriends";
@@ -97,7 +97,7 @@ public class MultipleSessionFactorySupportTests {
 
 	@Autowired private RestaurantRepository restaurantRepository;
 
-	@BeforeClass
+	@BeforeAll
 	public static void initializeDatabase() {
 
 		instance1 = Neo4jBuilders.newInProcessBuilder().withDisabledServer().build();
@@ -145,7 +145,7 @@ public class MultipleSessionFactorySupportTests {
 		assertThat(executeCountQuery(QUERY_COUNT_DINER_NODES, instance2.defaultDatabaseService())).isEqualTo(2L);
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownDatabase() {
 		instance1.close();
 		instance2.close();
@@ -219,22 +219,20 @@ public class MultipleSessionFactorySupportTests {
 		}
 	}
 
-	static class LoggerRule implements TestRule {
+	static class LoggerRule implements BeforeEachCallback, AfterEachCallback {
 
 		private final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
 		private final ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(
 				ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
 
 		@Override
-		public Statement apply(Statement base, Description description) {
-			return new Statement() {
-				@Override
-				public void evaluate() throws Throwable {
-					setup();
-					base.evaluate();
-					teardown();
-				}
-			};
+		public void beforeEach(ExtensionContext context) {
+			setup();
+		}
+
+		@Override
+		public void afterEach(ExtensionContext context) {
+			teardown();
 		}
 
 		private void setup() {
@@ -249,7 +247,7 @@ public class MultipleSessionFactorySupportTests {
 		}
 
 		public List<String> getFormattedMessages() {
-			return listAppender.list.stream().map(e -> e.getFormattedMessage()).collect(Collectors.toList());
+			return listAppender.list.stream().map(ILoggingEvent::getFormattedMessage).collect(Collectors.toList());
 		}
 
 	}

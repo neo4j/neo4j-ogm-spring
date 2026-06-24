@@ -19,15 +19,15 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.neo4j.examples.galaxy.domain.World;
 import org.springframework.data.neo4j.examples.galaxy.repo.WorldRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import static org.assertj.core.api.Assertions.*;
@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = GalaxyContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class WorldRepositoryTests {
 
 	@Autowired
@@ -86,7 +86,7 @@ public class WorldRepositoryTests {
 		assertThat(failed).isFalse();
 	}
 
-	@Test(expected = IncorrectResultSizeDataAccessException.class) // DATAGRAPH-948
+	@Test // DATAGRAPH-948
 	public void findByNameSingleResult() {
 		World world1 = new World("world 1", 1);
 		worldRepository.save(world1, 0);
@@ -95,6 +95,7 @@ public class WorldRepositoryTests {
 		worldRepository.save(world2, 0);
 
 		// there are 2 results, 1 is returned instead of IncorrectResultSizeDataAccessException thrown
-		worldRepository.findByName("world 1");
+		assertThatExceptionOfType(IncorrectResultSizeDataAccessException.class)
+				.isThrownBy(() -> worldRepository.findByName("world 1"));
 	}
 }

@@ -15,9 +15,9 @@
  */
 package org.springframework.data.neo4j.examples.friends;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
@@ -30,7 +30,7 @@ import org.springframework.data.neo4j.examples.friends.domain.Person;
 import org.springframework.data.neo4j.examples.friends.repo.FriendshipRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = FriendTests.FriendContext.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class FriendTests {
 
 	@Autowired GraphDatabaseService graphDatabaseService;
@@ -49,7 +49,7 @@ public class FriendTests {
 	@Autowired FriendshipRepository friendshipRepository;
 	@Autowired FriendService friendService;
 
-	@Before
+	@BeforeEach
 	public void cleanUpDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

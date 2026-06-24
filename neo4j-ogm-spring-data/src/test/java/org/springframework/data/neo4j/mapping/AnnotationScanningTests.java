@@ -17,21 +17,21 @@ package org.springframework.data.neo4j.mapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.ogm.metadata.AnnotationsInfo;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.mapping.gh1568.EntityWithSpringTransientProperties;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Michael J. Simons
  * @soundtrack Metallica - S&M2
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class AnnotationScanningTests {
 
 	@Autowired

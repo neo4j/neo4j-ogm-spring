@@ -15,8 +15,8 @@
  */
 package org.springframework.data.neo4j.namedquery;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ import org.springframework.data.neo4j.namedquery.domain.SampleEntityForNamedQuer
 import org.springframework.data.neo4j.namedquery.repo.SampleEntityForNamedQueryRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Ihor Dziuba
  */
 @ContextConfiguration(classes = { NamedQueryTests.NamedQueryContext.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 public class NamedQueryTests {
 

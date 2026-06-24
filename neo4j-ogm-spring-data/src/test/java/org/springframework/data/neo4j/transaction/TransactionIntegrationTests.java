@@ -15,10 +15,12 @@
  */
 package org.springframework.data.neo4j.transaction;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
@@ -30,14 +32,14 @@ import org.springframework.data.neo4j.examples.movies.repo.UserRepository;
 import org.springframework.data.neo4j.examples.movies.service.UserService;
 import org.springframework.data.neo4j.queries.MoviesContextConfiguration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Michal Bachman
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TransactionIntegrationTests {
 
 	@Autowired private DatabaseManagementService databaseManagementService;
@@ -48,7 +50,7 @@ public class TransactionIntegrationTests {
 
 	private TransactionEventListenerAdapter<Object> handler;
 
-	@Before
+	@BeforeEach
 	public void populateDatabase() {
 		handler = new TransactionEventListenerAdapter<Object>() {
 			@Override
@@ -59,24 +61,24 @@ public class TransactionIntegrationTests {
 		databaseManagementService.registerTransactionEventListener("neo4j", handler);
 	}
 
-	@After
+	@AfterEach
 	public void cleanupHandler() {
 		databaseManagementService.unregisterTransactionEventListener("neo4j", handler);
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void whenImplicitTransactionFailsNothingShouldBeCreated() {
-		userRepository.save(new User("Michal"));
+		assertThatExceptionOfType(Exception.class).isThrownBy(() -> userRepository.save(new User("Michal")));
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void whenExplicitTransactionFailsNothingShouldBeCreated() {
-		userService.saveWithTxAnnotationOnInterface(new User("Michal"));
+		assertThatExceptionOfType(Exception.class).isThrownBy(() -> userService.saveWithTxAnnotationOnInterface(new User("Michal")));
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void whenExplicitTransactionFailsNothingShouldBeCreated2() {
-		userService.saveWithTxAnnotationOnImpl(new User("Michal"));
+		assertThatExceptionOfType(Exception.class).isThrownBy(() -> userService.saveWithTxAnnotationOnImpl(new User("Michal")));
 	}
 
 	static class TransactionInterceptException extends Exception {

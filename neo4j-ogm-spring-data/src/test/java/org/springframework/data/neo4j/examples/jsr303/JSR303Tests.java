@@ -18,9 +18,9 @@ package org.springframework.data.neo4j.examples.jsr303;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ import org.springframework.data.neo4j.examples.jsr303.service.AdultService;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -44,7 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @ContextConfiguration(classes = { WebConfiguration.class, JSR303Tests.JSR303Context.class })
 @WebAppConfiguration
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class JSR303Tests {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -55,7 +55,7 @@ public class JSR303Tests {
 
 	private MockMvc mockMvc;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}

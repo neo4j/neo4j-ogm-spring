@@ -15,9 +15,9 @@
  */
 package org.springframework.data.neo4j.queries;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.ogm.model.QueryStatistics;
 import org.neo4j.ogm.session.Session;
@@ -28,7 +28,7 @@ import org.springframework.data.neo4j.examples.galaxy.repo.WorldRepository;
 import org.springframework.data.neo4j.queries.ogmgh552.Thing;
 import org.springframework.data.neo4j.queries.ogmgh552.ThingRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -45,7 +45,7 @@ import java.util.List;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = GalaxyContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 public class QueryReturnTypesTests {
 
@@ -59,7 +59,7 @@ public class QueryReturnTypesTests {
 
 	@Autowired ThingRepository thingRepository;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

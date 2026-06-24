@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.ogm.cypher.query.Pagination;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.examples.galaxy.domain.World;
 import org.springframework.data.neo4j.examples.galaxy.service.GalaxyService;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -45,14 +45,14 @@ import static org.assertj.core.api.Assertions.*;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = GalaxyContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 public class GalaxyServiceTests {
 
 	@Autowired
 	private GalaxyService galaxyService;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		galaxyService.deleteAll();
 		assertThat(galaxyService.getNumberOfWorlds()).isEqualTo(0);

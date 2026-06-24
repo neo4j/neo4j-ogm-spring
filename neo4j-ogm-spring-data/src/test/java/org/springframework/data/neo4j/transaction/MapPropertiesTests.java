@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.data.neo4j.transaction.domain.ThreadInfo;
 import org.springframework.data.neo4j.transaction.repo.ThreadInfoRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -39,7 +39,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MapPropertiesTests.ApplicationConfig.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class MapPropertiesTests {
 
 	@Autowired

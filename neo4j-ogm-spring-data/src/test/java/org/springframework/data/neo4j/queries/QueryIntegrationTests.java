@@ -16,6 +16,7 @@
 package org.springframework.data.neo4j.queries;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.data.Offset.offset;
 
 import java.math.BigDecimal;
@@ -30,9 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.harness.Neo4j;
@@ -49,7 +50,7 @@ import org.springframework.data.neo4j.examples.movies.domain.queryresult.UserQue
 import org.springframework.data.neo4j.examples.movies.repo.UnmanagedUserPojo;
 import org.springframework.data.neo4j.examples.movies.repo.UserRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -62,7 +63,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class QueryIntegrationTests {
 
 	@Autowired private Neo4j neo4jTestServer;
@@ -71,7 +72,7 @@ public class QueryIntegrationTests {
 
 	@Autowired private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		executeUpdate("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -434,11 +435,11 @@ public class QueryIntegrationTests {
 	/**
 	 * This limitation about not handling unmanaged types may be addressed after M2 if there's demand for it.
 	 */
-	@Test(expected = InvalidDataAccessApiUsageException.class)
+	@Test
 	public void shouldThrowMappingExceptionIfQueryResultTypeIsNotManagedInMappingMetadata() {
 		executeUpdate("CREATE (:User {name:'Colin'}), (:User {name:'Jeff'})");
 
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+		assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
 				// NB: UnmanagedUserPojo is not scanned with the other domain classes
@@ -447,7 +448,7 @@ public class QueryIntegrationTests {
 						.isNotNull();
 				assertThat(queryResult.getName()).isEqualTo("Jeff");
 			}
-		});
+		}));
 	}
 
 	@Test

@@ -17,8 +17,8 @@ package org.springframework.data.neo4j.bookmark;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -27,13 +27,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.annotation.EnableBookmarkManagement;
 import org.springframework.data.neo4j.annotation.UseBookmark;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author Frantisek Hartman
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = BookmarkManagementTests.BookmarkManagementConfiguration.class)
 public class BookmarkManagementTests {
 

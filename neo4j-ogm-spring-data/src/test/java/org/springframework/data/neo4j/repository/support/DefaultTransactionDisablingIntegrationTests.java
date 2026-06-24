@@ -15,8 +15,8 @@
  */
 package org.springframework.data.neo4j.repository.support;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ import org.springframework.data.neo4j.repository.sample.repo.UserRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Jens Schauder
  * @author Michael J. Simons
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DefaultTransactionDisablingIntegrationTests.Config.class)
 public class DefaultTransactionDisablingIntegrationTests {
 

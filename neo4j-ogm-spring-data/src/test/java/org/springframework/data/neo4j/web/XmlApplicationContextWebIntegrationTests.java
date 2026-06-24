@@ -22,16 +22,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.web.domain.User;
 import org.springframework.data.neo4j.web.repo.UserRepository;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -44,8 +44,8 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @ContextConfiguration(locations = "/xml-based-configuration-applicationContext.xml")
 @WebAppConfiguration
-@RunWith(SpringRunner.class)
-@Ignore("Make this work with new infrastructure test code.")
+@ExtendWith(SpringExtension.class)
+@Disabled("Make this work with new infrastructure test code.")
 public class XmlApplicationContextWebIntegrationTests {
 
 	@Autowired private UserRepository userRepository;
@@ -62,7 +62,7 @@ public class XmlApplicationContextWebIntegrationTests {
 
 	private User vince;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();

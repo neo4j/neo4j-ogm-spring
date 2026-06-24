@@ -17,8 +17,8 @@ package org.springframework.data.neo4j.repository.support;
 
 import java.time.Year;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.ogm.exception.core.InvalidPropertyFieldException;
 
@@ -32,7 +32,7 @@ import org.springframework.data.neo4j.domain.invalid.EntityWithInvalidProperty;
 import org.springframework.data.neo4j.domain.invalid.EntityWithInvalidPropertyRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.*;
  * @soundtrack Opeth - Blackwater Park
  */
 @ContextConfiguration(classes = Neo4jPersistenceExceptionTranslatorIntegrationTests.ContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class Neo4jPersistenceExceptionTranslatorIntegrationTests {
 
 	@Autowired

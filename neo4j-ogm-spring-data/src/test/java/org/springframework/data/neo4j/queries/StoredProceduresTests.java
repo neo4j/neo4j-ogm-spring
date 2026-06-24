@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.driver.Config;
 import org.neo4j.driver.GraphDatabase;
 import org.neo4j.harness.Neo4j;
@@ -42,7 +42,7 @@ import org.springframework.data.neo4j.queries.stored_procedures.DocumentReposito
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -50,7 +50,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = { StoredProceduresTests.ContextConfig.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class StoredProceduresTests {
 
 	private static final Config driverConfig = Config.builder().withoutEncryption().build();
@@ -58,7 +58,7 @@ public class StoredProceduresTests {
 	private static Neo4j serverControls;
 	private static URI boltURI;
 
-	@BeforeClass
+	@BeforeAll
 	public static void initializeNeo4j() {
 
 		serverControls = Neo4jBuilders.newInProcessBuilder().withDisabledServer().withProcedure(ApocLovesSwitch.class).build();
@@ -72,7 +72,7 @@ public class StoredProceduresTests {
 		documentRepository.callApocProcedureAndIgnoreResult();
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownNeo4j() {
 		serverControls.close();
 	}

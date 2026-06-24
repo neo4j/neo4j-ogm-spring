@@ -15,14 +15,14 @@
  */
 package org.springframework.data.neo4j.extensions;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = CustomGraphRepositoryTests.CustomPersistenceContext.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class CustomGraphRepositoryTests {
 
 	@Autowired private UserRepository repository;

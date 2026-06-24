@@ -16,6 +16,7 @@
 package org.springframework.data.neo4j.integration.conversion;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.lang.annotation.ElementType;
 import java.math.BigInteger;
@@ -24,9 +25,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.harness.Neo4j;
@@ -50,7 +51,7 @@ import org.springframework.data.neo4j.integration.conversion.domain.PensionPlan;
 import org.springframework.data.neo4j.integration.conversion.domain.SiteMember;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
@@ -64,7 +65,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Jens Schauder
  * @author Michael J. Simons
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ConversionServiceTests.ConversionServicePersistenceContext.class)
 public class ConversionServiceTests {
 
@@ -84,7 +85,7 @@ public class ConversionServiceTests {
 
 	@Autowired private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		neo4jTestServer.defaultDatabaseService().executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -198,13 +199,13 @@ public class ConversionServiceTests {
 				.isEqualTo(ElementType.METHOD);
 	}
 
-	@Test(expected = ConverterNotFoundException.class)
+	@Test
 	public void shouldThrowExceptionIfSuitableConverterIsNotFound() {
 		this.conversionService.addConverterFactory(new SpringMonetaryAmountToNumberConverterFactory());
 
 		PensionPlan pension = new PensionPlan(new MonetaryAmount(20_000, 00), "Ashes Assets LLP");
 		pension.setJavaElement(new JavaElement());
-		this.pensionRepository.save(pension);
+		assertThatExceptionOfType(ConverterNotFoundException.class).isThrownBy(() -> this.pensionRepository.save(pension));
 	}
 
 	@Test

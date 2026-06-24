@@ -28,9 +28,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ import org.springframework.data.neo4j.examples.movies.repo.CinemaRepository;
 import org.springframework.data.neo4j.examples.movies.repo.DirectorRepository;
 import org.springframework.data.neo4j.examples.movies.repo.UserRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -61,7 +61,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class DerivedQueryTests {
 
 	@Autowired private Neo4j neo4jTestServer;
@@ -76,7 +76,7 @@ public class DerivedQueryTests {
 
 	@Autowired private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		executeUpdate("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -297,17 +297,13 @@ public class DerivedQueryTests {
 		assertThat(theatres.contains(new Cinema("Ritzy"))).isTrue();
 	}
 
-	@Test(expected = UnsupportedOperationException.class) // DATAGRAPH-662
+	@Test // DATAGRAPH-662
 	public void shouldFindNodeEntititiesWithBaseOrNestedProperty() {
 		executeUpdate(
 				"CREATE (p:Theatre {name:'Picturehouse', city:'London', capacity:5000}) CREATE (r:Theatre {name:'Ritzy', city:'London', capacity: 7500}) CREATE (m:Theatre {name:'The Old Vic', city:'London', capacity: 5000})"
 						+ " CREATE (u:User {name:'Michal'}) CREATE (u)-[:VISITED]->(r)  CREATE (u)-[:VISITED]->(m)");
 
-		List<Cinema> theatres = cinemaRepository.findByLocationOrVisitedName("P", "Michal");
-		assertThat(theatres.size()).isEqualTo(2);
-		assertThat(theatres.contains(new Cinema("Ritzy"))).isTrue();
-		// assertTrue(theatres.contains(new Cinema("Picturehouse")));
-		assertThat(theatres.contains(new Cinema("The Old Vic"))).isTrue();
+		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> cinemaRepository.findByLocationOrVisitedName("P", "Michal"));
 	}
 
 	@Test // DATAGRAPH-632
@@ -344,7 +340,7 @@ public class DerivedQueryTests {
 		});
 	}
 
-	@Test(expected = UnsupportedOperationException.class) // DATAGRAPH-662
+	@Test // DATAGRAPH-662
 	public void shouldFindNodeEntititiesWithTwoNestedPropertiesOred() {
 		executeUpdate("CREATE (p:Theatre {name:'Picturehouse', city:'London', capacity:5000}) "
 				+ " CREATE (r:Theatre {name:'Ritzy', city:'London', capacity: 7500}) " + " CREATE (u:User {name:'Michal'}) "
@@ -352,7 +348,7 @@ public class DerivedQueryTests {
 				+ " CREATE (m2:Movie {title:'Pitch Perfect 2'})" + " CREATE (p)-[:BLOCKBUSTER]->(m1)"
 				+ " CREATE (r)-[:BLOCKBUSTER]->(m2)");
 
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			public void doInTransactionWithoutResult(TransactionStatus status) {
 				List<Cinema> theatres = cinemaRepository.findByVisitedNameOrBlockbusterOfTheWeekName("Michal", "San Andreas");
@@ -363,7 +359,7 @@ public class DerivedQueryTests {
 				theatres = cinemaRepository.findByVisitedNameOrBlockbusterOfTheWeekName("Vince", "Tomorrowland");
 				assertThat(theatres.size()).isEqualTo(0);
 			}
-		});
+		}));
 	}
 
 	@Test

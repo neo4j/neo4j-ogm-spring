@@ -17,9 +17,9 @@ package org.springframework.data.neo4j.transaction;
 
 import java.util.Iterator;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +30,7 @@ import org.springframework.data.neo4j.transaction.service.ServiceB;
 import org.springframework.data.neo4j.transaction.service.WrapperService;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = ExtendedTransactionsTests.ApplicationConfig.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class ExtendedTransactionsTests {
 
 	@Autowired GraphDatabaseService graphDatabaseService;
@@ -56,7 +56,7 @@ public class ExtendedTransactionsTests {
 
 	@Autowired WrapperService wrapperService;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

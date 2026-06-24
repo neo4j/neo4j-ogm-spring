@@ -20,9 +20,9 @@ import static org.springframework.data.neo4j.test.GraphDatabaseServiceAssert.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ import org.springframework.data.neo4j.domain.sample.User;
 import org.springframework.data.neo4j.repository.sample.repo.UserRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Michal Bachman
@@ -38,14 +38,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = RepoScanningTests.PersistenceContextInTheSamePackage.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class RepoScanningTests {
 
 	@Autowired private GraphDatabaseService graphDatabaseService;
 
 	@Autowired private UserRepository userRepository;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

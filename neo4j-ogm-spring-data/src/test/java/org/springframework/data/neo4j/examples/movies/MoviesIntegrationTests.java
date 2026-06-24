@@ -16,6 +16,7 @@
 package org.springframework.data.neo4j.examples.movies;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.springframework.data.neo4j.test.GraphDatabaseServiceAssert.assertThat;
 
 import java.util.ArrayList;
@@ -32,10 +33,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
@@ -62,7 +63,7 @@ import org.springframework.data.neo4j.examples.movies.repo.UserRepository;
 import org.springframework.data.neo4j.examples.movies.service.UserService;
 import org.springframework.data.neo4j.queries.MoviesContextConfiguration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -78,7 +79,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class MoviesIntegrationTests {
 
 	private static final String KNOWN_MAIL_ADDRESS_1 = "a@example.org";
@@ -97,7 +98,7 @@ public class MoviesIntegrationTests {
 	@Autowired private RatingRepository ratingRepository;
 	@Autowired private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -218,7 +219,7 @@ public class MoviesIntegrationTests {
 	}
 
 	@Test
-	@Ignore // FIXME
+	@Disabled // FIXME
 	// this test expects the session/tx to check for dirty objects, which it currently does not do
 	// you must save objects explicitly.
 	public void shouldUpdateUserUsingTransactionalService() {
@@ -262,7 +263,7 @@ public class MoviesIntegrationTests {
 	}
 
 	@Test
-	@Ignore
+	@Disabled
 	public void shouldFindUserWithoutName() {
 		User user = new User();
 		userRepository.save(user);
@@ -349,10 +350,10 @@ public class MoviesIntegrationTests {
 		assertThat(userRepository.count()).isEqualTo(100);
 	}
 
-	@Test(expected = DataAccessException.class)
+	@Test
 	public void shouldInterceptOGMExceptions() {
 		// ratings are REs and must be found to at least depth 1 in order to get the start and end nodes
-		ratingRepository.findAll(0);
+		assertThatExceptionOfType(DataAccessException.class).isThrownBy(() -> ratingRepository.findAll(0));
 	}
 
 	@Test

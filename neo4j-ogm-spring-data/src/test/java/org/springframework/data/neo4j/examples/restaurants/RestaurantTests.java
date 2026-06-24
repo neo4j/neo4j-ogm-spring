@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,7 @@ import org.springframework.data.neo4j.examples.restaurants.repo.RestaurantReposi
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Tests that we support each kind of keyword specified by Part.Type
@@ -52,13 +52,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = { RestaurantTests.RestaurantContext.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DirtiesContext
 public class RestaurantTests {
 
 	@Autowired private RestaurantRepository restaurantRepository;
 
-	@After
+	@AfterEach
 	public void tearDown() {
 		restaurantRepository.deleteAll();
 	}

@@ -18,9 +18,9 @@ package org.springframework.data.neo4j.queries;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.examples.movies.domain.Rating;
@@ -29,10 +29,11 @@ import org.springframework.data.neo4j.examples.movies.domain.User;
 import org.springframework.data.neo4j.examples.movies.repo.RatingRepository;
 import org.springframework.data.neo4j.examples.movies.repo.UserRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * @author Luanne Misquitta
@@ -41,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 public class DerivedRelationshipEntityQueryTests {
 
@@ -51,7 +52,7 @@ public class DerivedRelationshipEntityQueryTests {
 
 	@Autowired private RatingRepository ratingRepository;
 
-	@Before
+	@BeforeEach
 	public void clearDatabase() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -259,7 +260,7 @@ public class DerivedRelationshipEntityQueryTests {
 		assertThat(ratings.size()).isEqualTo(0);
 	}
 
-	@Test(expected = UnsupportedOperationException.class) // DATAGRAPH-662
+	@Test // DATAGRAPH-662
 	public void shouldFindRelEntitiesWithBaseAndNestedStartNodePropertyOred() {
 		graphDatabaseService.executeTransactionally(
 				"CREATE (m1:Movie {name:'Swiss Army Man'}) CREATE (m2:Movie {name:'Me Before You'}) CREATE (m:Movie {name:'X-Men Apocalypse'})"
@@ -267,15 +268,17 @@ public class DerivedRelationshipEntityQueryTests {
 						+ " CREATE (u)-[:RATED {stars:2}]->(m1)  CREATE (u)-[:RATED {stars:4}]->(m2)"
 						+ " CREATE (u2)-[:RATED {stars:3}]->(m)");
 
-		List<Rating> ratings = ratingRepository.findByStarsOrUserName(3, "Mark");
-		assertThat(ratings.size()).isEqualTo(3);
-		Collections.sort(ratings);
-		assertThat(ratings.get(0).getMovie().getName()).isEqualTo("Swiss Army Man");
-		assertThat(ratings.get(1).getMovie().getName()).isEqualTo("X-Men Apocalypse");
-		assertThat(ratings.get(2).getMovie().getName()).isEqualTo("Me Before You");
+		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> {
+			List<Rating> ratings = ratingRepository.findByStarsOrUserName(3, "Mark");
+			assertThat(ratings.size()).isEqualTo(3);
+			Collections.sort(ratings);
+			assertThat(ratings.get(0).getMovie().getName()).isEqualTo("Swiss Army Man");
+			assertThat(ratings.get(1).getMovie().getName()).isEqualTo("X-Men Apocalypse");
+			assertThat(ratings.get(2).getMovie().getName()).isEqualTo("Me Before You");
 
-		ratings = ratingRepository.findByStarsOrUserName(0, "Vince");
-		assertThat(ratings.size()).isEqualTo(0);
+			ratings = ratingRepository.findByStarsOrUserName(0, "Vince");
+			assertThat(ratings.size()).isEqualTo(0);
+		});
 	}
 
 	@Test // DATAGRAPH-632

@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Transaction;
@@ -38,7 +38,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.examples.restaurants.domain.Restaurant;
 import org.springframework.data.neo4j.examples.restaurants.repo.RestaurantRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Useful links: https://maps.google.com/maps?q=55.612191,12.994823 where q -> latLong
@@ -48,7 +48,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * https://www.latlong.net/Show-Latitude-Longitude.html
  */
 @ContextConfiguration(classes = { SpatialPersistenceContextConfiguration.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class SpatialConversionTests {
 
 	@Autowired

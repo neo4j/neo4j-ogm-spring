@@ -15,10 +15,10 @@
  */
 package org.springframework.data.neo4j.repository.support;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ import org.springframework.data.neo4j.repository.sample.repo.UserRepository;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;
@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = TransactionalRepositoryTests.Config.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TransactionalRepositoryTests {
 
 	@Autowired GraphDatabaseService graphDatabaseService;
@@ -52,14 +52,14 @@ public class TransactionalRepositoryTests {
 	@Autowired UserRepository repository;
 	@Autowired DelegatingTransactionManager transactionManager;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 		transactionManager.resetCount();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() {
 
 		repository.deleteAll();

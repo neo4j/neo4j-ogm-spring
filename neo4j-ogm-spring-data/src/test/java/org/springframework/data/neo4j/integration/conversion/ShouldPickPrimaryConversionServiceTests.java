@@ -15,9 +15,9 @@
  */
 package org.springframework.data.neo4j.integration.conversion;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
@@ -33,14 +33,14 @@ import org.springframework.data.neo4j.integration.conversion.domain.MonetaryAmou
 import org.springframework.data.neo4j.integration.conversion.domain.PensionPlan;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michael J. Simons
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ShouldPickPrimaryConversionServiceTests.ConversionServicePersistenceContext.class)
 public class ShouldPickPrimaryConversionServiceTests {
 
@@ -48,7 +48,7 @@ public class ShouldPickPrimaryConversionServiceTests {
 
 	@Autowired private PensionRepository pensionRepository;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

@@ -25,8 +25,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
@@ -44,14 +44,14 @@ import org.springframework.data.neo4j.conversion.support.EntityRepository;
 import org.springframework.data.neo4j.conversion.support.EntityWithConvertedAttributes;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * @author Michael J. Simons
  * @soundtrack Murray Gold - Doctor Who Season 9
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = MetaDataDrivenConversionServiceIntegrationTests.Config.class)
 public class MetaDataDrivenConversionServiceIntegrationTests {
 

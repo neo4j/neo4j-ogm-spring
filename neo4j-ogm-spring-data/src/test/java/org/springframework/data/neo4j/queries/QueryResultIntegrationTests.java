@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ import org.springframework.data.neo4j.queries.ogmgh551.ThingRepository;
 import org.springframework.data.neo4j.queries.ogmgh551.ThingResult;
 import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -48,7 +48,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = { QueryResultIntegrationTests.ContextConfig.class })
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 
 public class QueryResultIntegrationTests {
 
@@ -64,7 +64,7 @@ public class QueryResultIntegrationTests {
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void prepareTestDa() {
 
 		try (Transaction tx = graphDatabaseService.beginTx()) {

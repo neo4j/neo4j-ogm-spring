@@ -16,12 +16,13 @@
 package org.springframework.data.neo4j.queries;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.harness.Neo4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AbstractPageRequest;
@@ -35,7 +36,7 @@ import org.springframework.data.neo4j.examples.movies.domain.queryresult.CinemaQ
 import org.springframework.data.neo4j.examples.movies.domain.queryresult.CinemaQueryResultInterface;
 import org.springframework.data.neo4j.examples.movies.repo.CinemaRepository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -52,7 +53,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Michael J. Simons
  */
 @ContextConfiguration(classes = MoviesContextConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class PagedQueryTests {
 
 	@Autowired private Neo4j neo4jTestServer;
@@ -61,7 +62,7 @@ public class PagedQueryTests {
 
 	@Autowired private TransactionTemplate transactionTemplate;
 
-	@Before
+	@BeforeEach
 	public void init() {
 		executeUpdate("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}
@@ -158,12 +159,13 @@ public class PagedQueryTests {
 		assertThat(page.hasNext()).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	@Transactional
 	public void shouldThrowExceptionIfCountQueryAbsent() {
 		setup();
 		Pageable pageable = PageRequest.of(0, 3);
-		cinemaRepository.getPagedCinemasWithoutCountQuery(pageable);
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> cinemaRepository.getPagedCinemasWithoutCountQuery(pageable));
 	}
 
 	/**

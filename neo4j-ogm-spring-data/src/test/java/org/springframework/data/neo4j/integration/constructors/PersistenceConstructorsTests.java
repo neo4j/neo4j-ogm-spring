@@ -29,10 +29,10 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import org.assertj.core.util.DateUtil;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.ogm.exception.core.MappingException;
 import org.neo4j.ogm.session.Session;
@@ -52,14 +52,14 @@ import org.springframework.data.neo4j.test.Neo4jIntegrationTest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * @author Nicolas Mervaillie
  * @author Michael J. Simons
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = PersistenceConstructorsTests.PersistenceConstructorsPersistenceContext.class)
 public class PersistenceConstructorsTests {
 
@@ -280,7 +280,7 @@ public class PersistenceConstructorsTests {
 				.isTrue();
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		graphDatabaseService.executeTransactionally("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r, n");
 	}

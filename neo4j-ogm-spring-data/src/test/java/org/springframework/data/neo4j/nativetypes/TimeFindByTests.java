@@ -26,14 +26,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = NativeTypesContextConfiguration.class)
 public class TimeFindByTests {
 
@@ -48,7 +48,7 @@ public class TimeFindByTests {
 	private TemporalAmount temporalAmount;
 	private Duration duration;
 
-	@Before
+	@BeforeEach
 	public void setUpDomainObject() {
 		repository.deleteAll();
 
