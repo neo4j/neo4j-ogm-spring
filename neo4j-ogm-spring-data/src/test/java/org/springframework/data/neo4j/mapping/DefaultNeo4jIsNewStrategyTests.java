@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import java.util.UUID;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.metadata.MetaData;
 import org.springframework.data.neo4j.mapping.datagraph1212.AssignedWithPrimitiveVersion;
 import org.springframework.data.neo4j.mapping.datagraph1212.AssignedWithVersion;

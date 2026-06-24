@@ -17,7 +17,7 @@ package org.springframework.data.neo4j.conversion;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.neo4j.conversion.support.ConvertedClass;
 import org.springframework.data.neo4j.conversion.support.Converters;
 

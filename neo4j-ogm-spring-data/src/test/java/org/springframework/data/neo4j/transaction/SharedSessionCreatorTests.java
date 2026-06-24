@@ -16,9 +16,10 @@
 package org.springframework.data.neo4j.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 
@@ -35,17 +36,17 @@ public class SharedSessionCreatorTests {
 		assertThat(SharedSessionCreator.createSharedSession(sessionFactory)).isNotNull();
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void transactionRequiredExceptionOnPersist() {
 		SessionFactory sessionFactory = mock(SessionFactory.class);
 		Session session = SharedSessionCreator.createSharedSession(sessionFactory);
-		session.save(new Object());
+		assertThatIllegalStateException().isThrownBy(() -> session.save(new Object()));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void transactionRequiredExceptionOnDelete() {
 		SessionFactory sessionFactory = mock(SessionFactory.class);
 		Session session = SharedSessionCreator.createSharedSession(sessionFactory);
-		session.delete(new Object());
+		assertThatIllegalStateException().isThrownBy(() -> session.delete(new Object()));
 	}
 }

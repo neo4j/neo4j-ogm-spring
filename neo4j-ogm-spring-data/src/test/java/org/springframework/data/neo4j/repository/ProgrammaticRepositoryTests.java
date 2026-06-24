@@ -24,10 +24,10 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 import org.assertj.core.api.Assertions;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.neo4j.ogm.config.Configuration;
@@ -61,7 +61,7 @@ public class ProgrammaticRepositoryTests {
 	private MovieRepository movieRepository;
 	private Session session;
 
-	@BeforeClass
+	@BeforeAll
 	public static void oneTimeSetUp() {
 		serverControls = Neo4jBuilders.newInProcessBuilder().withDisabledServer().build();
 
@@ -74,7 +74,7 @@ public class ProgrammaticRepositoryTests {
 		transactionTemplate = new TransactionTemplate(platformTransactionManager);
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void shutdownTestServer() {
 
 		if (sessionFactory != null) {
@@ -88,7 +88,7 @@ public class ProgrammaticRepositoryTests {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void init() {
 		session = sessionFactory.openSession();
 		session.purgeDatabase();

@@ -27,8 +27,8 @@ import java.util.Set;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.ProcessBean;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.session.Session;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -39,7 +39,7 @@ public class Neo4jRepositoryExtensionTests {
 
 	Bean<Session> session;
 
-	@Before
+	@BeforeEach
 	@SuppressWarnings("unchecked")
 	public void setUp() {
 

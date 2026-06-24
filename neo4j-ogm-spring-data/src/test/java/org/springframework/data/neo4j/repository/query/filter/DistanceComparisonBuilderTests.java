@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.data.Percentage.*;
 import static org.springframework.data.neo4j.repository.query.filter.DistanceComparisonBuilder.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 

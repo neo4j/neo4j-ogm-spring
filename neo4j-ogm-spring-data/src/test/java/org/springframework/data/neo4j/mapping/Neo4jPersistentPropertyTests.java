@@ -17,7 +17,7 @@ package org.springframework.data.neo4j.mapping;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.metadata.MetaData;
 import org.springframework.data.neo4j.domain.sample.NodeWithUUIDAsId;
 import org.springframework.data.neo4j.domain.sample.User;

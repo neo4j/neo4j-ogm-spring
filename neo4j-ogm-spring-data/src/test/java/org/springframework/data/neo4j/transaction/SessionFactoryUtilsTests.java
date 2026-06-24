@@ -15,7 +15,7 @@
  */
 package org.springframework.data.neo4j.transaction;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.exception.CypherException;
 import org.neo4j.ogm.exception.core.BaseClassNotFoundException;
 import org.springframework.core.NestedRuntimeException;

@@ -21,8 +21,8 @@ import static org.mockito.Mockito.*;
 import java.io.Serializable;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.neo4j.ogm.session.Session;
 import org.springframework.aop.framework.Advised;
@@ -46,7 +46,7 @@ public class Neo4jRepositoryFactoryTests {
 
 	Neo4jRepositoryFactory factory;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 
 		Session session = mock(Session.class, withSettings().extraInterfaces(MetaDataProvider.class));

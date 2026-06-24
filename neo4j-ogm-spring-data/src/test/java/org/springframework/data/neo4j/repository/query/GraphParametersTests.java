@@ -18,7 +18,7 @@ package org.springframework.data.neo4j.repository.query;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.repository.query.ParametersSource;
 

@@ -29,9 +29,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
@@ -65,7 +65,7 @@ public class OpenSessionInViewTests {
 
 	private ServletWebRequest webRequest;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		sessionFactory = mock(SessionFactory.class);
 		session = mock(Session.class);
@@ -78,7 +78,7 @@ public class OpenSessionInViewTests {
 		this.webRequest = new ServletWebRequest(this.request);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		assertThat(TransactionSynchronizationManager.getResourceMap().isEmpty()).isTrue();
 		assertThat(TransactionSynchronizationManager.isSynchronizationActive()).isFalse();

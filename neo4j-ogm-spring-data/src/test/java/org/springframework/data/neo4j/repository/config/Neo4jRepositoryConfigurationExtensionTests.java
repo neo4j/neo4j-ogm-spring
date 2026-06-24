@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.session.SessionFactory;

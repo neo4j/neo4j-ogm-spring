@@ -17,7 +17,7 @@ package org.springframework.data.neo4j.mapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.metadata.MetaData;
 
 /**

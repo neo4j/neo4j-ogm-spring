@@ -17,8 +17,8 @@ package org.springframework.data.neo4j.repository.config;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
@@ -39,7 +39,7 @@ public class Neo4jRepositoriesRegistrarTests {
 	BeanDefinitionRegistry registry;
 	AnnotationMetadata metadata;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 
 		metadata = AnnotationMetadata.introspect(Config.class);

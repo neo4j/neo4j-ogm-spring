@@ -29,8 +29,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -73,7 +73,7 @@ public class TransactionalEventListenerTests {
 
 	private TransactionTemplate transactionTemplate = new TransactionTemplate(new CallCountingTransactionManager());
 
-	@Before
+	@BeforeEach
 	public void closeContext() {
 		if (this.context != null) {
 			this.context.close();

@@ -24,10 +24,10 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.neo4j.ogm.session.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,14 +39,14 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.support.DefaultRepositoryMetadata;
 import org.springframework.util.ReflectionUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GraphQueryExecutionTests {
 
 	@Mock private Session sessionMock;
 
-	private Method method = ReflectionUtils.findMethod(UserRepository.class, "findByFirstname", String.class,
+	private final Method method = ReflectionUtils.findMethod(UserRepository.class, "findByFirstname", String.class,
 			Pageable.class);
-	private ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
+	private final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
 	@Test
 	public void pagedExecutionShouldNotGenerateCountQueryIfQueryReportedNoResults() {

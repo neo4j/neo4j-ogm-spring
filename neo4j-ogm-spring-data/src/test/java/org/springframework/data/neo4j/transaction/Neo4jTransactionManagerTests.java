@@ -24,10 +24,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
@@ -53,7 +53,7 @@ public class Neo4jTransactionManagerTests {
 
 	private TransactionTemplate tt;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		sf = mock(SessionFactory.class);
 		session = mock(Session.class);
@@ -69,7 +69,7 @@ public class Neo4jTransactionManagerTests {
 		tt.setTransactionManager(tm);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		assertThat(TransactionSynchronizationManager.getResourceMap().isEmpty()).isTrue();
 		assertThat(TransactionSynchronizationManager.isSynchronizationActive()).isFalse();
@@ -225,7 +225,7 @@ public class Neo4jTransactionManagerTests {
 	}
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testParticipatingTransactionWithRollbackOnly() throws Exception {
 
 		try {

@@ -16,13 +16,14 @@
 package org.springframework.data.neo4j.repository.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.mockito.Mockito.*;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -35,7 +36,7 @@ import org.springframework.data.neo4j.repository.sample.repo.ContactRepository;
  * @author Mark Paluch
  * @author Michael J. Simons
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class Neo4jRepositoryFactoryBeanTests {
 
 	Neo4jRepositoryFactoryBean factoryBean;
@@ -44,7 +45,7 @@ public class Neo4jRepositoryFactoryBeanTests {
 
 	@Mock MappingContext context;
 
-	@Before
+	@BeforeEach
 	@SuppressWarnings("unchecked")
 	public void setUp() {
 
@@ -68,19 +69,19 @@ public class Neo4jRepositoryFactoryBeanTests {
 		assertThat(factoryBean.getObject()).isNotNull();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void requiresListableBeanFactory() {
 
-		factoryBean.setBeanFactory(mock(BeanFactory.class));
+		assertThatIllegalArgumentException().isThrownBy(() -> factoryBean.setBeanFactory(mock(BeanFactory.class)));
 	}
 
 	/**
 	 * Assert that the factory rejects calls to {@code Neo4jRepositoryFactoryBean#setRepositoryInterface(Class)} with
 	 * {@literal null} or any other parameter instance not implementing {@code Repository}.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void preventsNullRepositoryInterface() {
 
-		factoryBean = new Neo4jRepositoryFactoryBean(null);
+		assertThatIllegalArgumentException().isThrownBy(() -> factoryBean = new Neo4jRepositoryFactoryBean(null));
 	}
 }

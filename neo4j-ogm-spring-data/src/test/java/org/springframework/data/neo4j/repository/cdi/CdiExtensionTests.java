@@ -20,9 +20,9 @@ import java.util.Optional;
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.data.neo4j.examples.friends.domain.Person;
@@ -40,7 +40,7 @@ public class CdiExtensionTests {
 	static Neo4j neo4jTestServer;
 	static SeContainer container;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUp() {
 
 		neo4jTestServer = Neo4jBuilders.newInProcessBuilder().withDisabledServer().build();
@@ -51,7 +51,7 @@ public class CdiExtensionTests {
 				.initialize();
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDown() throws Exception {
 		container.close();
 		neo4jTestServer.close();
