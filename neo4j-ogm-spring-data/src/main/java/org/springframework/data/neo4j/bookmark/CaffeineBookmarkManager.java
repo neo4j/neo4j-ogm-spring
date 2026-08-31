@@ -34,7 +34,7 @@ public class CaffeineBookmarkManager implements BookmarkManager {
 	private final Cache<String, String> cache;
 
 	public CaffeineBookmarkManager() {
-		cache = Caffeine.newBuilder().maximumSize(10_000).expireAfterWrite(1, TimeUnit.MINUTES).build();
+		cache = Caffeine.newBuilder().maximumSize(10_000).build();
 	}
 
 	/**
