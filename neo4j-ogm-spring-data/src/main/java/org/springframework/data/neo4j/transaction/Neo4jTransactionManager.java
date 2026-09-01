@@ -179,9 +179,11 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 			}
 
 			Transaction.Type type = getTransactionType(definition, txObject);
+			// the transaction won't be closed by code,
+			// instead the surrounding session will get closed and indirectly also close the transaction
 			Transaction transactionData = session.beginTransaction(type, getBookmarks());
 
-			txObject.setTransactionData(transactionData);
+			txObject.getSessionHolder().setTransactionActive();
 			if (logger.isDebugEnabled()) {
 				logger.debug("Beginning Transaction [" + transactionData + "] on Session [" + session + "]");
 			}
@@ -209,8 +211,6 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 		Transaction.Type type;
 		if (definition.isReadOnly() && txObject.isNewSessionHolder()) {
 			type = Transaction.Type.READ_ONLY;
-		} else if (txObject.transactionData != null) {
-			type = txObject.transactionData.type();
 		} else {
 			type = Transaction.Type.READ_WRITE;
 		}
@@ -351,12 +351,6 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 			TransactionSynchronizationManager.unbindResourceIfPossible(getSessionFactory());
 		}
 
-		Transaction rawTransaction = txObject.getTransactionData();
-
-		if (rawTransaction != null && rawTransaction.status().equals(Transaction.Status.OPEN)) {
-			rawTransaction.close();
-		}
-
 		// Remove the session holder from the thread.
 		if (txObject.isNewSessionHolder()) {
 			Session session = txObject.getSessionHolder().getSession();
@@ -379,8 +373,6 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 
 		private boolean newSessionHolder;
 
-		private Transaction transactionData;
-
 		void setSessionHolder(SessionHolder sessionHolder, boolean newSessionHolder) {
 			this.sessionHolder = sessionHolder;
 			this.newSessionHolder = newSessionHolder;
@@ -398,14 +390,6 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 			return (this.sessionHolder != null && this.sessionHolder.isTransactionActive());
 		}
 
-		void setTransactionData(Transaction rawTransaction) {
-			this.transactionData = rawTransaction;
-			this.sessionHolder.setTransactionActive(true);
-		}
-
-		Transaction getTransactionData() {
-			return this.transactionData;
-		}
 	}
 
 	/**
