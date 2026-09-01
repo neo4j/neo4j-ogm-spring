@@ -160,10 +160,14 @@ public class Query {
 	}
 
 	@Nullable Pagination getOptionalPagination(@Nullable Pageable pageable, boolean forSlicing) {
-
 		if(pageable != null) {
+			long offset = pageable.getPageNumber() * (long) pageable.getPageSize();
+			if (offset > Integer.MAX_VALUE) {
+				throw new IllegalArgumentException(
+						"Page offset " + offset + " exceeds the maximum size of %d".formatted(Integer.MAX_VALUE));
+			}
 			Pagination pagination = new Pagination(pageable.getPageNumber(),pageable.getPageSize() + ((forSlicing) ? 1 : 0));
-			pagination.setOffset(pageable.getPageNumber() * pageable.getPageSize());
+			pagination.setOffset((int) offset);
 			return pagination;
 		}
 
