@@ -34,7 +34,7 @@ public class BookmarkInterceptor extends BookmarkSupport implements MethodInterc
 		} else {
 			previousValue = bookmarkInfoHolder.get();
 		}
-		bookmarkInfoHolder.set(new BookmarkInfo(true));
+		bookmarkInfoHolder.set(new BookmarkInfo());
 
 		try {
 			return invocation.proceed();
