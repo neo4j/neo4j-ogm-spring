@@ -219,7 +219,8 @@ public class Neo4jTransactionManager extends AbstractPlatformTransactionManager
 
 	private Iterable<String> getBookmarks() {
 		BookmarkInfo bookmarkInfo = BookmarkSupport.currentBookmarkInfo();
-		if (bookmarkInfo != null && bookmarkInfo.shouldUseBookmark()) {
+		// if bookmarkInfo is not null, bookmarks should be used
+		if (bookmarkInfo != null) {
 			if (bookmarkManager != null) {
 				Collection<String> bookmarks = bookmarkManager.getBookmarks();
 				bookmarkInfo.setBookmarks(bookmarks);

@@ -19,28 +19,15 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * Bookmark info stored as thread local
+ * Bookmark info stored as thread local.
+ * If this an instance of this class is set,
+ * it means that bookmark management should be used.
  *
  * @author Frantisek Hartman
  */
 public class BookmarkInfo implements Serializable {
 
-	private boolean useBookmark;
 	private Collection<String> bookmarks;
-
-	public BookmarkInfo() {}
-
-	public BookmarkInfo(boolean useBookmark) {
-		this.useBookmark = true;
-	}
-
-	public boolean shouldUseBookmark() {
-		return useBookmark;
-	}
-
-	public void setUseBookmark(boolean useBookmark) {
-		this.useBookmark = useBookmark;
-	}
 
 	public Collection<String> getBookmarks() {
 		return bookmarks;

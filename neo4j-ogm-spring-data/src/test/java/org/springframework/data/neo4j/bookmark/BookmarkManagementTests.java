@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.annotation.EnableBookmarkManagement;
@@ -53,7 +51,6 @@ public class BookmarkManagementTests {
 		useBookmarkOnMethodBean.runWithBookmark(() -> {
 			BookmarkInfo bookmarkInfo = BookmarkSupport.currentBookmarkInfo();
 			assertThat(bookmarkInfo).isNotNull();
-			assertThat(bookmarkInfo.shouldUseBookmark()).isTrue();
 		});
 	}
 
@@ -79,7 +76,6 @@ public class BookmarkManagementTests {
 		useBookmarkWrapperOnMethodBean.runWithBookmark(() -> {
 			BookmarkInfo bookmarkInfo = BookmarkSupport.currentBookmarkInfo();
 			assertThat(bookmarkInfo).isNotNull();
-			assertThat(bookmarkInfo.shouldUseBookmark()).isTrue();
 		});
 	}
 
@@ -97,7 +93,6 @@ public class BookmarkManagementTests {
 		useBookmarkOnClassBean.runWithBookmark(() -> {
 			BookmarkInfo bookmarkInfo = BookmarkSupport.currentBookmarkInfo();
 			assertThat(bookmarkInfo).isNotNull();
-			assertThat(bookmarkInfo.shouldUseBookmark()).isTrue();
 		});
 	}
 
@@ -114,7 +109,6 @@ public class BookmarkManagementTests {
 		useBookmarkWrapperOnClassBean.runWithBookmark(() -> {
 			BookmarkInfo bookmarkInfo = BookmarkSupport.currentBookmarkInfo();
 			assertThat(bookmarkInfo).isNotNull();
-			assertThat(bookmarkInfo.shouldUseBookmark()).isTrue();
 		});
 	}
 
