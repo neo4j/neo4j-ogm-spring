@@ -168,6 +168,15 @@ public class PagedQueryTests {
 				.isThrownBy(() -> cinemaRepository.getPagedCinemasWithoutCountQuery(pageable));
 	}
 
+	@Test
+	@Transactional
+	public void shouldThrowExceptionIfCountQueryAbsentAndPageIsBeyondResultSize() {
+		setup();
+		Pageable pageable = PageRequest.of(99, 3);
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> cinemaRepository.getPagedCinemasWithoutCountQuery(pageable));
+	}
+
 	/**
 	 * Repeats shouldFindPagedCinemas for query results - concrete classes.
 	 */

@@ -155,15 +155,15 @@ public interface GraphQueryExecution {
 				} else {
 					result = (List<?>) session.query(type, query.getCypherQuery(pageable, false), query.getParameters());
 				}
-				count = result.isEmpty() ? 0 : countTotalNumberOfElements(query);
+				return PageableExecutionUtils.getPage(result, pageable, () -> countTotalNumberOfElements(query));
 			}
 
 			return PageableExecutionUtils.getPage(result, pageable, () -> count);
 		}
 
-		private Integer countTotalNumberOfElements(Query query) {
+		private long countTotalNumberOfElements(Query query) {
 			Assert.hasText(query.getCountQuery(), "Must specify a count query to get pagination info.");
-			return session.queryForObject(Integer.class, query.getCountQuery(), query.getParameters());
+			return session.queryForObject(Long.class, query.getCountQuery(), query.getParameters());
 		}
 	}
 
