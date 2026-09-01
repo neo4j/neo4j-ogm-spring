@@ -26,6 +26,7 @@ import org.springframework.data.neo4j.mapping.Neo4jMappingContext;
 import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.data.repository.query.ResultProcessor;
 import org.springframework.data.repository.query.parser.PartTree;
+import org.springframework.data.util.ReflectionUtils;
 
 /**
  * Specialisation of {@link RepositoryQuery} that handles mapping of filter finders.
@@ -66,7 +67,7 @@ public class PartTreeNeo4jQuery extends AbstractGraphRepositoryQuery {
 		GraphParameterAccessor accessor = new GraphParametersParameterAccessor(graphQueryMethod, parameters);
 		Class<?> returnType = graphQueryMethod.getMethod().getReturnType();
 
-		if (returnType.equals(Void.class)) {
+		if (ReflectionUtils.isVoid(returnType)) {
 			throw new RuntimeException("Derived Queries must have a return type");
 		}
 
