@@ -40,7 +40,7 @@ public class PeopleRepositoryTests {
 
 	@Container
 	@ServiceConnection
-	static Neo4jContainer neo4j = new Neo4jContainer("neo4j:5");
+	static Neo4jContainer neo4j = new Neo4jContainer("neo4j:2026");
 
 	@BeforeAll
 	static void prepareDataSet(@Autowired Driver driver) {
